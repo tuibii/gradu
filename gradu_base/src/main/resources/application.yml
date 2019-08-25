@@ -1,0 +1,16 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: gradu-base
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tensquare_base?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: "000000"
+
+  jpa:
+    database: mysql
+    show-sql: true
