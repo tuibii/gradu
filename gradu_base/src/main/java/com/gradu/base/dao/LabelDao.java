@@ -1,11 +1,13 @@
 package com.gradu.base.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gradu.base.entity.LabelEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface LabelDao extends JpaRepository<LabelEntity,String>, JpaSpecificationExecutor<LabelEntity> {
-
+@Mapper
+@Repository
+public interface LabelDao extends BaseMapper<LabelEntity> {
 
 
 }

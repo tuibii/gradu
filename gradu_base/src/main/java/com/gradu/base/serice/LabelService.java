@@ -1,23 +1,23 @@
 package com.gradu.base.serice;
 
-import com.gradu.base.dto.LabelDTO;
-import org.springframework.data.domain.Page;
-
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.gradu.base.entity.LabelEntity;
 import java.util.List;
 
-public interface LabelService {
+public interface LabelService{
 
-    List<LabelDTO> getAllLabel();
+    List<LabelEntity> getAllLabel();
 
-    LabelDTO getLabelById(String id);
+    LabelEntity getLabelById(String id);
 
-    void addLabel(LabelDTO dto);
+    void addLabel(LabelEntity entity);
 
-    void updateLabel(LabelDTO dto);
+    void updateLabel(LabelEntity entity);
 
     void delLabelById(String id);
 
-    List<LabelDTO> findSearch(LabelDTO dto);
+    List<LabelEntity> findSearch(LabelEntity entity);
 
-    Page<LabelDTO> getLabelPage(int page, int size, LabelDTO dto);
+    Page<LabelEntity> getLabelPage(int page, int size, LabelEntity entity);
 }
