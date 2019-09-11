@@ -1,10 +1,12 @@
 package com.gradu.base.serice;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gradu.base.entity.LabelEntity;
+import service.MPBaseService;
+
 import java.util.List;
 
-public interface LabelService {
+public interface LabelService extends MPBaseService<LabelEntity> {
 
     List<LabelEntity> getAllLabel();
 
@@ -18,5 +20,5 @@ public interface LabelService {
 
     List<LabelEntity> findSearch(LabelEntity entity);
 
-    Page<LabelEntity> getLabelPage(int page, int size, LabelEntity entity);
+    IPage<LabelEntity> getLabelPage(int page, int size, LabelEntity entity);
 }
