@@ -8,7 +8,7 @@ import java.io.Serializable;
  *   标签 Entity
  */
 @Data
-@TableName(value = "tb_label")
+@TableName(value = "label")
 public class LabelEntity implements Serializable {
 
     /**

@@ -56,7 +56,7 @@ public class LabelServiceImpl extends MPBaseServiceImpl<LabelDao,LabelEntity> im
         wrapper.eq(StringUtils.isNotEmpty(entity.getLabelname()),"labelname",entity.getLabelname());
         wrapper.eq(StringUtils.isNotEmpty(entity.getState()),"state",entity.getState());
 
-        return this.page(new Page<LabelEntity>(page,size));
+        return this.page(new Page<>(page,size));
     }
 
 }

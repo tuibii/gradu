@@ -268,240 +268,240 @@ public interface BaseService<T, D> {
      */
     List<D> findDTOByParams(Map<String, Object> params, String orderBy) throws Exception;
 
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findPageData(T params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByLogicParams(T params) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByLogicParams(Map<String, Object> params) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByLogicParams(T params, String orderBy) throws Exception;
-
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByLogicParams(D params) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByLogicParams(Map<String, Object> params) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByLogicParams(D params, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取实体分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<T> 分页列表
-     */
-    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-
-    /**
-     * 获取DTO分页列表
-     *
-     * @param params   查询参数
-     * @param pageNum  页码
-     * @param pageSize 数量
-     * @param orderBy  排序
-     * @return PageList<D> 分页列表
-     */
-    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findPageData(T params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取实体列表(条件)
+//     *
+//     * @param params 条件参数
+//     * @return List<D>(返回值说明)
+//     */
+//    List<T> findByLogicParams(T params) throws Exception;
+//
+//    /**
+//     * 获取实体列表(条件)
+//     *
+//     * @param params 条件参数
+//     * @return List<D>(返回值说明)
+//     */
+//    List<T> findByLogicParams(Map<String, Object> params) throws Exception;
+//
+//    /**
+//     * 获取实体列表(条件)
+//     *
+//     * @param params  条件参数
+//     * @param orderBy 排序
+//     * @return List<D>(返回值说明)
+//     */
+//    List<T> findByLogicParams(T params, String orderBy) throws Exception;
+//
+//
+//    /**
+//     * 获取实体列表(条件)
+//     *
+//     * @param params  条件参数
+//     * @param orderBy 排序
+//     * @return List<D>(返回值说明)
+//     */
+//    List<T> findByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO列表(条件)
+//     *
+//     * @param params 条件参数
+//     * @return List<D>(返回值说明)
+//     */
+//    List<D> findDTOByLogicParams(D params) throws Exception;
+//
+//    /**
+//     * 获取DTO列表(条件)
+//     *
+//     * @param params 条件参数
+//     * @return List<D>(返回值说明)
+//     */
+//    List<D> findDTOByLogicParams(Map<String, Object> params) throws Exception;
+//
+//    /**
+//     * 获取DTO列表(条件)
+//     *
+//     * @param params  条件参数
+//     * @param orderBy 排序
+//     * @return List<D>(返回值说明)
+//     */
+//    List<D> findDTOByLogicParams(D params, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO列表(条件)
+//     *
+//     * @param params  条件参数
+//     * @param orderBy 排序
+//     * @return List<D>(返回值说明)
+//     */
+//    List<D> findDTOByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取实体分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<T> 分页列表
+//     */
+//    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
+//
+//    /**
+//     * 获取DTO分页列表
+//     *
+//     * @param params   查询参数
+//     * @param pageNum  页码
+//     * @param pageSize 数量
+//     * @param orderBy  排序
+//     * @return PageList<D> 分页列表
+//     */
+//    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
 }
