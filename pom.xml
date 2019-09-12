@@ -10,6 +10,7 @@
     <modules>
         <module>gradu_common</module>
         <module>gradu_base</module>
+        <module>gradu_qa</module>
     </modules>
     <packaging>pom</packaging>
 
