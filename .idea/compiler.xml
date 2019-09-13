@@ -7,9 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gradu_base" />
-        <module name="gradu_common" />
         <module name="gradu_qa" />
+        <module name="gradu_common" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gradu_base" options="-parameters" />
+      <module name="gradu_common" options="-parameters" />
+      <module name="gradu_qa" options="-parameters" />
+    </option>
   </component>
 </project>
