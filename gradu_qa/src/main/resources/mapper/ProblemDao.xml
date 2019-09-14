@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gradu.qa.dao.ProblemDao">
+
+    <select id="newProblemList" resultType="ProblemEntity" parameterType="String">
+        select * from problem,pl where id = problemid
+        and labelid = #{labelid} order by replytime desc
+    </select>
+
+    <select id="hotProblemList" resultType="ProblemEntity" parameterType="String">
+        select * from problem,pl where id = problemid
+        and labelid = #{labelid} order by reply desc
+    </select>
+
+</mapper>

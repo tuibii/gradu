@@ -1,13 +1,13 @@
 server:
-  port: 9002
+  port: 9003
 
 spring:
   application:
-    name: gradu-qa
+    name: gradu-article
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gra_qa?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/gra_article?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: "000000"
 
@@ -15,4 +15,4 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.gradu.qa.entity
+  type-aliases-package: com.gradu.article.entity
