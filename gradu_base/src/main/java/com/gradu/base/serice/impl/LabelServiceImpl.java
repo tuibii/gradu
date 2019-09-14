@@ -25,7 +25,7 @@ public class LabelServiceImpl extends MPBaseServiceImpl<LabelDao,LabelEntity> im
     }
 
     public LabelEntity getLabelById(String id){
-        return this.getLabelById(id);
+        return this.getById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
