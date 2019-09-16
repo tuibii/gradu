@@ -8,6 +8,8 @@ import com.gradu.base.dao.LabelDao;
 import com.gradu.base.entity.LabelEntity;
 import com.gradu.base.serice.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.impl.MPBaseServiceImpl;
@@ -24,6 +26,7 @@ public class LabelServiceImpl extends MPBaseServiceImpl<LabelDao,LabelEntity> im
         return this.list();
     }
 
+    @Cacheable(cacheNames = "label",key = "#id")
     public LabelEntity getLabelById(String id){
         return this.getById(id);
     }
@@ -33,11 +36,13 @@ public class LabelServiceImpl extends MPBaseServiceImpl<LabelDao,LabelEntity> im
         this.save(entity);
     }
 
+    @CacheEvict(cacheNames = "label",key = "#entity.id")
     @Transactional(rollbackFor = Exception.class)
     public void updateLabel(LabelEntity entity){
         this.updateById(entity);
     }
 
+    @CacheEvict(cacheNames = "label",key = "#id")
     @Transactional(rollbackFor = Exception.class)
     public void delLabelById(String id){
         this.removeById(id);
