@@ -1,0 +1,11 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: gradu-treehole
+  data:
+    mongodb:
+      host: 47.97.162.247
+      database: treehole
+

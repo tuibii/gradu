@@ -12,6 +12,7 @@
         <module>gradu_base</module>
         <module>gradu_qa</module>
         <module>gradu_article</module>
+        <module>gradu_treehole</module>
     </modules>
     <packaging>pom</packaging>
 
