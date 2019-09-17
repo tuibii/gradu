@@ -12,7 +12,7 @@ public interface TreeholeService {
 
     TreeholeEntity selectById(String id);
 
-    void save(TreeholeEntity entity);
+    void add(TreeholeEntity entity);
 
     void update(TreeholeEntity entity);
 

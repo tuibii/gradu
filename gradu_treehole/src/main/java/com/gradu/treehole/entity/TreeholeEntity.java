@@ -20,14 +20,17 @@ public class TreeholeEntity implements Serializable {
 
     private String nickname;
 
-    private Integer visits = 0;
+    private Integer visits;
 
-    private Integer thumbup = 0;
+    private Integer thumbup;
 
-    private Integer share = 0;
+    private Integer share;
 
-    private Integer comment = 0;
+    private Integer comment;
 
+    /**
+     *   1 公开  0 私有
+     */
     private String state;
 
     private String parentid;

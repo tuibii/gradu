@@ -13,6 +13,7 @@
         <module>gradu_qa</module>
         <module>gradu_article</module>
         <module>gradu_treehole</module>
+        <module>gradu_gathering</module>
     </modules>
     <packaging>pom</packaging>
 

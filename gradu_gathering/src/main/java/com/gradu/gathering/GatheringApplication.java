@@ -1,4 +1,4 @@
-package com.gradu.article;
+package com.gradu.gathering;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,15 +8,15 @@ import util.IdWorker;
 
 @EnableCaching
 @SpringBootApplication
-public class ArticleApplication {
+public class GatheringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ArticleApplication.class,args);
+        SpringApplication.run(GatheringApplication.class,args);
     }
 
     @Bean
     public IdWorker idWorker(){
         return new IdWorker();
     }
-}
 
+}

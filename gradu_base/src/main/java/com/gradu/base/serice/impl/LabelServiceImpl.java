@@ -33,6 +33,7 @@ public class LabelServiceImpl extends MPBaseServiceImpl<LabelDao,LabelEntity> im
 
     @Transactional(rollbackFor = Exception.class)
     public void addLabel(LabelEntity entity){
+        entity.setId(String.valueOf(idWorker.nextId()));
         this.save(entity);
     }
 
