@@ -1,9 +1,13 @@
 package com.gradu.treehole.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gradu.treehole.dao.TreeholeDao;
 import com.gradu.treehole.entity.TreeholeEntity;
 import com.gradu.treehole.service.TreeholeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import util.IdWorker;
@@ -18,6 +22,9 @@ public class TreeholeServiceImpl implements TreeholeService {
 
     @Autowired
     IdWorker idWorker;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Override
     public List<TreeholeEntity> findAll() {
@@ -47,4 +54,30 @@ public class TreeholeServiceImpl implements TreeholeService {
     public void deleteById(String id) {
         treeholeDao.deleteById(id);
     }
+
+    @Override
+    public Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid,int page,int size) {
+        Pageable pageable = PageRequest.of(page-1,size);
+        return treeholeDao.findTreeholeEntityByParentid(parentid,pageable);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void thumbup(String userid,String treeholeid) {
+        TreeholeEntity treeholeEntity = selectById(treeholeid);
+        treeholeEntity.setThumbup(treeholeEntity.getThumbup()==null? 1 : treeholeEntity.getThumbup()+1);
+        treeholeDao.save(treeholeEntity);
+        redisTemplate.opsForSet().add("treehole:thumbup:"+treeholeid,userid);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void unthumbup(String userid,String treeholeid) {
+        TreeholeEntity treeholeEntity = selectById(treeholeid);
+        treeholeEntity.setThumbup(treeholeEntity.getThumbup()==null ? 0 : treeholeEntity.getThumbup()-1 );
+        treeholeDao.save(treeholeEntity);
+        redisTemplate.opsForSet().remove("treehole:thumbup:"+treeholeid,userid);
+    }
+
+
 }
