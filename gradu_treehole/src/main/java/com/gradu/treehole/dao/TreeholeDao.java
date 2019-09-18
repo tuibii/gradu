@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TreeholeDao extends MongoRepository<TreeholeEntity,String> {
 
-    Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid, Pageable pageable);
+    Page<TreeholeEntity> findTreeholeEntitiesByParentid(String parentid, Pageable pageable);
 
 }
