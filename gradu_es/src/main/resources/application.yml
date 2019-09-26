@@ -6,5 +6,5 @@ spring:
     name: gradu-es
   data:
     elasticsearch:
-      cluster-nodes: 47.97.162.247:9300
+      cluster-nodes: 127.0.0.1:9300
 

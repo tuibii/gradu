@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Document(indexName = "gradu_es",type = "article")
@@ -21,6 +22,8 @@ public class ArticleEntity implements Serializable {
     private String content;
 
     private String state;
+
+    private Date updatetime;
 
 
 }
