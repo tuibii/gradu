@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @Document(indexName = "gradu_es",type = "article")
-public class ArticleEntity implements Serializable {
+public class ArticleIndexEntity implements Serializable {
 
     @Id
     private String id;
