@@ -4,4 +4,5 @@ import com.gradu.user.entity.UserEntity;
 import service.MPBaseService;
 
 public interface UserService extends MPBaseService<UserEntity> {
+    void sendSms(String mobile);
 }
