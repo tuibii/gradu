@@ -15,6 +15,7 @@
         <module>gradu_treehole</module>
         <module>gradu_gathering</module>
         <module>gradu_es</module>
+        <module>gradu_user</module>
     </modules>
     <packaging>pom</packaging>
 

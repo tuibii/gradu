@@ -13,6 +13,7 @@
         <module name="gradu_gathering" />
         <module name="gradu_qa" />
         <module name="gradu_treehole" />
+        <module name="gradu_user" />
       </profile>
     </annotationProcessing>
   </component>

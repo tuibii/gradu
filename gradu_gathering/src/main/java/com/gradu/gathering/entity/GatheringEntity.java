@@ -3,11 +3,12 @@ package com.gradu.gathering.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableName("gathering")
 @Data
-public class GatheringEntity {
+public class GatheringEntity implements Serializable {
 
     /**
      *  主键
