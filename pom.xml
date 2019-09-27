@@ -16,6 +16,7 @@
         <module>gradu_gathering</module>
         <module>gradu_es</module>
         <module>gradu_user</module>
+        <module>gradu_mq</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,0 +1,17 @@
+server:
+  port: 9008
+
+spring:
+  application:
+    name: gradu-mq
+
+  rabbitmq:
+    host: 47.97.162.247
+
+
+sms:
+  aliyun:
+    access_key_id: LTAI4FtAABnGAkz4xwpoxwMt
+    access_key_secret: rLR0h20fdg48mcVta9iRvudKx15DIe
+    template_code: SMS_174990010
+    sign_name: 博砚
