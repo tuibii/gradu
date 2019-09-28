@@ -29,4 +29,17 @@ public class AdminController {
 
         return new Result(true, StatusCode.OK,"添加管理员成功");
     }
+
+    @PostMapping("/login")
+    public Result login(AdminEntity adminEntity){
+
+        AdminEntity entity = adminService.login(adminEntity);
+
+        if (entity == null){
+            return new Result(false,StatusCode.FAIL,"登陆失败");
+        }
+
+        return new Result(true,StatusCode.OK,"登陆成功");
+    }
+
 }

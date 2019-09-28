@@ -1,5 +1,7 @@
 package com.gradu.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.user.dao.AdminDao;
 import com.gradu.user.entity.AdminEntity;
 import com.gradu.user.service.AdminService;
@@ -18,10 +20,25 @@ public class AdminServiceImpl extends MPBaseServiceImpl<AdminDao, AdminEntity> i
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Override
     public void add(AdminEntity adminEntity){
         adminEntity.setId(String.valueOf(idWorker.nextId()));
         adminEntity.setPassword(bCryptPasswordEncoder.encode(adminEntity.getPassword()));
         adminEntity.setState("1");
         save(adminEntity);
+    }
+
+    @Override
+    public AdminEntity login(AdminEntity adminEntity) {
+
+        QueryWrapper<AdminEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(adminEntity.getLoginname()),"loginname",adminEntity.getLoginname());
+        AdminEntity one = getOne(wrapper);
+
+        if (one != null && bCryptPasswordEncoder.matches(adminEntity.getPassword(),one.getPassword())){
+            return  one;
+        }
+
+        return null;
     }
 }

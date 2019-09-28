@@ -5,4 +5,6 @@ import service.MPBaseService;
 
 public interface AdminService extends MPBaseService<AdminEntity> {
     void add(AdminEntity adminEntity);
+
+    AdminEntity login(AdminEntity adminEntity);
 }
