@@ -31,7 +31,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public Result login(AdminEntity adminEntity){
+    public Result login(@RequestBody AdminEntity adminEntity){
 
         AdminEntity entity = adminService.login(adminEntity);
 

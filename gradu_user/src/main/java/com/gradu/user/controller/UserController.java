@@ -67,4 +67,16 @@ public class UserController {
         return new Result(true,StatusCode.OK,"注册成功");
     }
 
+    @PostMapping("/login")
+    public Result login(@RequestBody UserEntity userEntity){
+
+        UserEntity entity = userService.login(userEntity);
+
+        if (entity == null){
+            return new Result(false,StatusCode.LOGIN_ERROR,"登陆失败");
+        }
+
+        return new Result(true,StatusCode.OK,"登陆成功");
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.gradu.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.user.dao.UserDao;
 import com.gradu.user.entity.UserEntity;
 import com.gradu.user.service.UserService;
@@ -32,6 +34,7 @@ public class UserServiceImpl extends MPBaseServiceImpl<UserDao, UserEntity> impl
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Override
     public void add(UserEntity entity) {
         entity.setId(String.valueOf(idWorker.nextId()));
         entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
@@ -42,6 +45,17 @@ public class UserServiceImpl extends MPBaseServiceImpl<UserDao, UserEntity> impl
         entity.setLastdate(new Date());
         entity.setUpdatedate(new Date());
         save(entity);
+    }
+
+    @Override
+    public UserEntity login(UserEntity userEntity) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(userEntity.getMobile()),"mobile",userEntity.getMobile());
+        UserEntity one = getOne(wrapper);
+        if (one!=null && bCryptPasswordEncoder.matches(userEntity.getPassword(),one.getPassword())){
+            return one;
+        }
+        return null;
     }
 
     @Override
