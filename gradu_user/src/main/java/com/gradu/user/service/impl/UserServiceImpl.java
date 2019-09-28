@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
@@ -28,16 +29,19 @@ public class UserServiceImpl extends MPBaseServiceImpl<UserDao, UserEntity> impl
     @Autowired
     IdWorker idWorker;
 
-    @Override
-    public boolean save(UserEntity entity) {
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public void add(UserEntity entity) {
         entity.setId(String.valueOf(idWorker.nextId()));
+        entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         entity.setFollowcount(0);
         entity.setFanscount(0);
         entity.setOnline(0L);
         entity.setRegdate(new Date());
         entity.setLastdate(new Date());
         entity.setUpdatedate(new Date());
-        return super.save(entity);
+        save(entity);
     }
 
     @Override
