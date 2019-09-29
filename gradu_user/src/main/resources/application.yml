@@ -16,7 +16,14 @@ spring:
   rabbitmq:
     host: 47.97.162.247
 
-
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# token配置模板
+#过期时间： 2小时（1000*60*60*2）
+#私钥 base64加密
+token:
+  config:
+    effective_time: 7200000
+    private_key: "JXU1MzVBJXU3ODFB"

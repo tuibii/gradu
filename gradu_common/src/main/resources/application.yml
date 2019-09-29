@@ -1,4 +1,7 @@
+# token配置模板
+#过期时间： 2小时（1000*60*60*2）
+#私钥 base64加密
 token:
   config:
-    effective_time: 60*60*2
+    effective_time: 7200000
     private_key: "JXU1MzVBJXU3ODFB"

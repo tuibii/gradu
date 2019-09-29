@@ -8,7 +8,11 @@ spring:
   rabbitmq:
     host: 47.97.162.247
 
-
+#阿里云短信配置
+#账号
+#私钥
+#模板code
+#签名
 sms:
   aliyun:
     access_key_id: LTAI4FtAABnGAkz4xwpoxwMt

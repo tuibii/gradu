@@ -7,6 +7,10 @@ import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import util.JwtUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -15,6 +19,9 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @PostMapping
     public Result add(@RequestBody AdminEntity adminEntity){
@@ -39,7 +46,11 @@ public class AdminController {
             return new Result(false,StatusCode.FAIL,"登陆失败");
         }
 
-        return new Result(true,StatusCode.OK,"登陆成功");
+        String token = jwtUtil.cteateToken(entity.getId(), entity.getLoginname(), "admin");
+        Map<String,Object> map = new HashMap<>();
+        map.put("token",token);
+        map.put("role","admin");
+        return new Result(true,StatusCode.OK,"登陆成功",token);
     }
 
 }
