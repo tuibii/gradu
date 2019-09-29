@@ -1,0 +1,4 @@
+token:
+  config:
+    effective_time: 60*60*2
+    private_key: "JXU1MzVBJXU3ODFB"
