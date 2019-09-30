@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import util.IdWorker;
+import util.JwtUtil;
 
 @EnableCaching
 @SpringBootApplication
@@ -17,5 +18,10 @@ public class QaApplication {
     @Bean
     public IdWorker idWorker(){
         return new IdWorker();
+    }
+
+    @Bean
+    public JwtUtil jwtUtil(){
+        return new JwtUtil();
     }
 }

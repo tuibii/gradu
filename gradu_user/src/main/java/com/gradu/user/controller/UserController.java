@@ -9,6 +9,9 @@ import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import util.JwtUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
@@ -20,6 +23,12 @@ public class UserController {
 
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Autowired
+    HttpServletRequest request;
 
     /**
      *  短信验证
@@ -76,7 +85,22 @@ public class UserController {
             return new Result(false,StatusCode.LOGIN_ERROR,"登陆失败");
         }
 
-        return new Result(true,StatusCode.OK,"登陆成功");
+        String token = jwtUtil.cteateToken(entity.getId(), entity.getNickname(), "user");
+        return new Result(true,StatusCode.OK,"登陆成功",token);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable("id") String id){
+
+        String role = (String)request.getAttribute("Authorization");
+
+        if (StringUtils.isEmpty(role) || !role.equals("admin")){
+            return new Result(false,StatusCode.ACCESS_ERROR,"权限不足");
+        }
+
+        userService.removeById(id);
+        return new Result();
     }
 
 }

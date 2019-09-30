@@ -47,9 +47,6 @@ public class AdminController {
         }
 
         String token = jwtUtil.cteateToken(entity.getId(), entity.getLoginname(), "admin");
-        Map<String,Object> map = new HashMap<>();
-        map.put("token",token);
-        map.put("role","admin");
         return new Result(true,StatusCode.OK,"登陆成功",token);
     }
 

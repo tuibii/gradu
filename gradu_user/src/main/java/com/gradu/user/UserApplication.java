@@ -1,5 +1,6 @@
 package com.gradu.user;
 
+import interceptor.JwtInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -29,5 +30,10 @@ public class UserApplication {
     @Bean
     public JwtUtil jwtUtil(){
         return new JwtUtil();
+    }
+
+    @Bean
+    public JwtInterceptor jwtInterceptor(){
+        return new JwtInterceptor();
     }
 }

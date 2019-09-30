@@ -19,3 +19,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.gradu.qa.entity
+
+token:
+  config:
+    private_key: "JXU1MzVBJXU3ODFB"
