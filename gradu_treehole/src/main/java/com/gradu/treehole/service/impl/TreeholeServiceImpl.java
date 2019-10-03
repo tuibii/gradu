@@ -1,12 +1,12 @@
 package com.gradu.treehole.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gradu.treehole.dao.TreeholeDao;
 import com.gradu.treehole.entity.TreeholeEntity;
 import com.gradu.treehole.service.TreeholeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -74,7 +74,7 @@ public class TreeholeServiceImpl implements TreeholeService {
     }
 
     @Override
-    public Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid,int page,int size) {
+    public Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid, int page, int size) {
         Pageable pageable = PageRequest.of(page-1,size);
         return treeholeDao.findTreeholeEntitiesByParentid(parentid,pageable);
     }

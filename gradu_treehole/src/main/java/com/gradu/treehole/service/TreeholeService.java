@@ -1,8 +1,7 @@
 package com.gradu.treehole.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gradu.treehole.entity.TreeholeEntity;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public interface TreeholeService {
 
     void deleteById(String id);
 
-    Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid,int page,int size);
+    Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid, int page, int size);
 
     void thumbup(String userid,String treeholeid);
 

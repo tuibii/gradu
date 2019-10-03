@@ -8,10 +8,17 @@ spring:
     mongodb:
       host: 47.97.162.247
       database: treehole
-
   redis:
     host: 47.97.162.247
     port: 6379
   jpa:
     show-sql: true
+  main:
+    allow-bean-definition-overriding: true
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true

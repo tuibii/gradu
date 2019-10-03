@@ -9,3 +9,12 @@ spring:
       cluster-nodes: 127.0.0.1:9300
   jpa:
     show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true

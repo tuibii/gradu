@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: gradu-user
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.97.162.247:3306/gra_user?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
@@ -15,6 +14,8 @@ spring:
     port: 6379
   rabbitmq:
     host: 47.97.162.247
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis-plus:
   configuration:
@@ -27,3 +28,10 @@ token:
   config:
     effective_time: 7200000
     private_key: "JXU1MzVBJXU3ODFB"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true

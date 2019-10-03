@@ -4,9 +4,10 @@ server:
 spring:
   application:
     name: gradu-mq
-
   rabbitmq:
     host: 47.97.162.247
+  main:
+    allow-bean-definition-overriding: true
 
 #阿里云短信配置
 #账号
@@ -19,3 +20,10 @@ sms:
     access_key_secret: rLR0h20fdg48mcVta9iRvudKx15DIe
     template_code: SMS_174990010
     sign_name: 博砚
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
