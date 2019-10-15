@@ -2,11 +2,13 @@ package com.gradu.qa.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.gradu.qa.client.BaseClient;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.service.ProblemService;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,14 @@ public class ProblemController {
 
     @Autowired
     HttpServletRequest request;
+
+    @Autowired
+    BaseClient baseClient;
+
+    @GetMapping("/label/{id}")
+    public Result findlabel(@PathVariable("id") String id){
+        return baseClient.getLabelById(id);
+    }
 
     @GetMapping("/newproblem/{label}/{page}/{size}")
     public Result getNewList(@PathVariable("label") String label, @PathVariable("page") int page,@PathVariable("size") int size){
@@ -50,7 +60,8 @@ public class ProblemController {
     @PostMapping
     public Result add(@RequestBody ProblemEntity problemEntity){
 
-        String role = (String) request.getAttribute("Authorization");
+        Claims claims = (Claims) request.getAttribute("Authorization");
+        String role = (String) claims.get("role");
 
         if (StringUtils.isEmpty(role) || !role.equals("user")){
             return new Result(false,StatusCode.ACCESS_ERROR,"权限不足");

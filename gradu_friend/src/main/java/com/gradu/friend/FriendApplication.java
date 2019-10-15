@@ -1,30 +1,22 @@
-package com.gradu.qa;
+package com.gradu.friend;
 
 import interceptor.JwtInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import util.IdWorker;
 import util.JwtUtil;
 
-@EnableCaching
 @SpringBootApplication
 @EnableEurekaClient
 @EnableDiscoveryClient
 @EnableFeignClients
-public class QaApplication {
+public class FriendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QaApplication.class, args);
-    }
-
-    @Bean
-    public IdWorker idWorker(){
-        return new IdWorker();
+        SpringApplication.run(FriendApplication.class,args);
     }
 
     @Bean
@@ -36,4 +28,5 @@ public class QaApplication {
     public JwtInterceptor jwtInterceptor(){
         return new JwtInterceptor();
     }
+
 }

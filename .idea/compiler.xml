@@ -11,6 +11,7 @@
         <module name="gradu_common" />
         <module name="gradu_es" />
         <module name="gradu_eureka" />
+        <module name="gradu_friend" />
         <module name="gradu_gathering" />
         <module name="gradu_mq" />
         <module name="gradu_qa" />
