@@ -1,0 +1,33 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: gradu-manager
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+zuul:
+  routes:
+    gradu-article:
+      path: /article/**
+      serviceId: gradu-article
+    gradu-base:
+      path: /base/**
+      serviceId: gradu-base
+    gradu-friend:
+      path: /friend/**
+      serviceId: gradu-friend
+    gradu-gathering:
+      path: /gathering/**
+      serviceId: gradu-gathering
+    gradu-qa:
+      path: /qa/**
+      serviceId: gradu-qa
+    gradu-treehole:
+      path: /treehole/**
+      serviceId: gradu-treehole
+

@@ -13,10 +13,12 @@
         <module name="gradu_eureka" />
         <module name="gradu_friend" />
         <module name="gradu_gathering" />
+        <module name="gradu_manager" />
         <module name="gradu_mq" />
         <module name="gradu_qa" />
         <module name="gradu_treehole" />
         <module name="gradu_user" />
+        <module name="gradu_web" />
       </profile>
     </annotationProcessing>
   </component>

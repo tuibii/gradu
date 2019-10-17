@@ -19,6 +19,8 @@
         <module>gradu_mq</module>
         <module>gradu_eureka</module>
         <module>gradu_friend</module>
+        <module>gradu_manager</module>
+        <module>gradu_web</module>
     </modules>
     <packaging>pom</packaging>
 

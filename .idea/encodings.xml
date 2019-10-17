@@ -9,9 +9,11 @@
     <file url="file://$PROJECT_DIR$/gradu_eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_friend" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_gathering" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gradu_manager" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_mq" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_qa" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_treehole" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gradu_user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gradu_web" charset="UTF-8" />
   </component>
 </project>
