@@ -9,4 +9,8 @@ public interface UserService extends MPBaseService<UserEntity> {
     void add(UserEntity userEntity);
 
     UserEntity login(UserEntity userEntity);
+
+    void incFans(String id, int num);
+
+    void incFollow(String id, int num);
 }

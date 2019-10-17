@@ -59,6 +59,18 @@ public class UserServiceImpl extends MPBaseServiceImpl<UserDao, UserEntity> impl
     }
 
     @Override
+    public void incFans(String id, int num) {
+        UserEntity entity = getById(id);
+        entity.setFanscount(entity.getFanscount()+num);
+    }
+
+    @Override
+    public void incFollow(String id, int num) {
+        UserEntity entity = getById(id);
+        entity.setFollowcount(entity.getFollowcount()+num);
+    }
+
+    @Override
     public void sendSms(String mobile) {
         String randomNumeric = RandomStringUtils.randomNumeric(6);
 

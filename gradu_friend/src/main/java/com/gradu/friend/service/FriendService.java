@@ -5,5 +5,7 @@ import service.MPBaseService;
 
 public interface FriendService extends MPBaseService<FriendEntity> {
 
-    int add(String userid, String friendid);
+    int focus(String userid, String friendid);
+
+    int unFocus(String userid, String friendid);
 }

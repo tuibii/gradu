@@ -23,8 +23,8 @@ public class FriendController {
     @Autowired
     HttpServletRequest request;
 
-    @GetMapping("/like/friend/{id}/{type}")
-    public Result addFriend(@PathVariable("id") String friendid,@PathVariable("type") String type){
+    @GetMapping("/focus/friend/{id}/{type}")
+    public Result focusFriend(@PathVariable("id") String friendid,@PathVariable("type") String type){
 
         Claims claims = (Claims) request.getAttribute("Authorization");
 
@@ -34,13 +34,25 @@ public class FriendController {
 
         String userid = claims.getId();
         if (type != null && type.equals("1")){
-            int num = friendService.add(userid,friendid);
+            /**
+             *   关注
+             */
+            int num = friendService.focus(userid,friendid);
             if (num != 0){
-                return new Result(true,StatusCode.OK,"添加成功");
+                return new Result(true,StatusCode.OK,"关注成功");
             }else {
-                return new Result(false,StatusCode.FAIL,"不能重复添加");
+                return new Result(false,StatusCode.FAIL,"不能重复关注");
             }
-        }else {
+        }else if (type.equals("0")){
+            /**
+             *  取消关注
+             */
+            int num = friendService.unFocus(userid,friendid);
+            if (num != 0){
+                return new Result(true,StatusCode.OK,"取消关注成功");
+            }else {
+                return new Result(false,StatusCode.FAIL,"没有关注该用户");
+            }
 
         }
 

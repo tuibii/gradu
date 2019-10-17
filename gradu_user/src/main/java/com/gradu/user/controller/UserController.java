@@ -103,4 +103,14 @@ public class UserController {
         return new Result();
     }
 
+    @PostMapping("/fans/{id}/{num}")
+    public void incFans(@PathVariable("id") String id,@PathVariable("num") int num){
+        userService.incFans(id,num);
+    }
+
+    @PostMapping("/follow/{id}/{num}")
+    public void incFollow(@PathVariable("id") String id,@PathVariable("num") int num){
+        userService.incFollow(id,num);
+    }
+
 }
