@@ -6,8 +6,6 @@ spring:
     name: gradu-mq
   rabbitmq:
     host: 47.97.162.247
-  main:
-    allow-bean-definition-overriding: true
 
 #阿里云短信配置
 #账号

@@ -14,8 +14,6 @@ spring:
     port: 6379
   rabbitmq:
     host: 47.97.162.247
-  main:
-    allow-bean-definition-overriding: true
 
 mybatis-plus:
   configuration:

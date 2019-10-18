@@ -3,8 +3,7 @@ server:
 spring:
   application:
     name: gradu-web
-  main:
-    allow-bean-definition-overriding: true
+
 
 eureka:
   client:
