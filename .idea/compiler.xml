@@ -9,6 +9,7 @@
         <module name="gradu_article" />
         <module name="gradu_base" />
         <module name="gradu_common" />
+        <module name="gradu_config" />
         <module name="gradu_es" />
         <module name="gradu_eureka" />
         <module name="gradu_friend" />

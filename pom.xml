@@ -21,6 +21,7 @@
         <module>gradu_friend</module>
         <module>gradu_manager</module>
         <module>gradu_web</module>
+        <module>gradu_config</module>
     </modules>
     <packaging>pom</packaging>
 
