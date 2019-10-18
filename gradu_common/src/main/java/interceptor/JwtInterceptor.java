@@ -23,7 +23,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                 Claims claims = jwtUtil.parseToken(token);
                 String role = (String)claims.get("role");
                 if (StringUtils.isNotEmpty(role)){
-                    request.setAttribute("Authorization",claims);
+                    request.setAttribute("token",claims);
                 }
             }catch (Exception e){
                 throw new RuntimeException("权限不足");

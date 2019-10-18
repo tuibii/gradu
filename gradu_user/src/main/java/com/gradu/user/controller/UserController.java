@@ -6,6 +6,7 @@ import com.gradu.user.entity.UserEntity;
 import com.gradu.user.service.UserService;
 import entity.Result;
 import entity.StatusCode;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +94,8 @@ public class UserController {
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable("id") String id){
 
-        String role = (String)request.getAttribute("Authorization");
+        Claims token = (Claims)request.getAttribute("token");
+        String role = (String)token.get("role");
 
         if (StringUtils.isEmpty(role) || !role.equals("admin")){
             return new Result(false,StatusCode.ACCESS_ERROR,"权限不足");

@@ -60,7 +60,7 @@ public class ProblemController {
     @PostMapping
     public Result add(@RequestBody ProblemEntity problemEntity){
 
-        Claims claims = (Claims) request.getAttribute("Authorization");
+        Claims claims = (Claims) request.getAttribute("token");
         String role = (String) claims.get("role");
 
         if (StringUtils.isEmpty(role) || !role.equals("user")){

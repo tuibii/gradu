@@ -1,4 +1,4 @@
-package com.gradu.web.filter;
+package com.gradu.manager.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.exception.ZuulException;
