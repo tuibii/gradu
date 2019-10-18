@@ -4,6 +4,10 @@ spring:
   application:
     name: gradu-manager
 
+token:
+  config:
+    private_key: "JXU1MzVBJXU3ODFB"
+
 eureka:
   client:
     service-url:

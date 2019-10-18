@@ -24,8 +24,8 @@ mybatis-plus:
 #私钥 base64加密
 token:
   config:
-    effective_time: 7200000
     private_key: "JXU1MzVBJXU3ODFB"
+    effective_time: 7200000
 
 eureka:
   client:
