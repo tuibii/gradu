@@ -1,11 +1,19 @@
 spring:
   application:
     name: gradu-config
-
   cloud:
     config:
       server:
         git:
           uri: "https://github.com/tuibii/gradu_config.git"
+          username: tuibii
+          password: wyl995..
+  rabbitmq:
+    host: 47.97.162.247
 server:
   port: 12000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
