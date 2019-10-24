@@ -26,7 +26,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                     request.setAttribute("token",claims);
                 }
             }catch (Exception e){
-                throw new RuntimeException("权限不足");
+                e.printStackTrace();
             }
         }
 

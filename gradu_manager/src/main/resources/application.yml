@@ -34,4 +34,7 @@ zuul:
     gradu-treehole:
       path: /treehole/**
       serviceId: gradu-treehole
+    gradu-user:
+      path: /user/**
+      serviceId: gradu-user
 

@@ -1,16 +1,22 @@
 package com.gradu.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.gradu.user.dto.AdminDTO;
 import com.gradu.user.entity.AdminEntity;
 import com.gradu.user.service.AdminService;
+import com.gradu.user.service.CaptchaService;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import util.JwtUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.servlet.ServletOutputStream;
 
 @RestController
 @RequestMapping("/admin")
@@ -22,6 +28,9 @@ public class AdminController {
 
     @Autowired
     JwtUtil jwtUtil;
+
+    @Autowired
+    CaptchaService captchaService;
 
     @PostMapping
     public Result add(@RequestBody AdminEntity adminEntity){
@@ -38,9 +47,15 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody AdminEntity adminEntity){
+    public Result login(@RequestBody AdminDTO dto){
 
-        AdminEntity entity = adminService.login(adminEntity);
+        //验证码是否正确
+        boolean flag = captchaService.validate(dto.getUuid(), dto.getCaptcha());
+        if(!flag){
+            return new Result(false,StatusCode.FAIL,"验证码错误");
+        }
+
+        AdminEntity entity = adminService.login(dto);
 
         if (entity == null){
             return new Result(false,StatusCode.FAIL,"登陆失败");
@@ -48,6 +63,27 @@ public class AdminController {
 
         String token = jwtUtil.cteateToken(entity.getId(), entity.getLoginname(), "admin");
         return new Result(true,StatusCode.OK,"登陆成功",token);
+    }
+
+    /**
+     *  验证码
+     * @param response
+     * @param uuid
+     * @throws IOException
+     */
+    @GetMapping("/captcha")
+    public void captcha(HttpServletResponse response, String uuid)throws IOException {
+
+        if (StringUtils.isNotEmpty(uuid)){
+            //生成图片验证码
+            BufferedImage image = captchaService.create(uuid);
+
+            response.setHeader("Cache-Control", "no-store, no-cache");
+            response.setContentType("image/jpeg");
+            ServletOutputStream out = response.getOutputStream();
+            ImageIO.write(image, "jpg", out);
+            out.close();
+        }
     }
 
 }

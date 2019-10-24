@@ -3,6 +3,7 @@ package com.gradu.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.user.dao.AdminDao;
+import com.gradu.user.dto.AdminDTO;
 import com.gradu.user.entity.AdminEntity;
 import com.gradu.user.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,13 @@ public class AdminServiceImpl extends MPBaseServiceImpl<AdminDao, AdminEntity> i
     }
 
     @Override
-    public AdminEntity login(AdminEntity adminEntity) {
+    public AdminEntity login(AdminDTO dto) {
 
         QueryWrapper<AdminEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq(StringUtils.isNotEmpty(adminEntity.getLoginname()),"loginname",adminEntity.getLoginname());
+        wrapper.eq(StringUtils.isNotEmpty(dto.getLoginname()),"loginname",dto.getLoginname());
         AdminEntity one = getOne(wrapper);
 
-        if (one != null && bCryptPasswordEncoder.matches(adminEntity.getPassword(),one.getPassword())){
+        if (one != null && bCryptPasswordEncoder.matches(dto.getPassword(),one.getPassword())){
             return  one;
         }
 

@@ -43,7 +43,7 @@ public class WebFilter extends ZuulFilter {
         }
 
         String url = request.getRequestURL().toString();
-        if (url.indexOf("/admin/login")>0){
+        if (url.indexOf("/admin/login")>0 || url.indexOf("/admin/captcha")>0){
             return null;
         }
 
