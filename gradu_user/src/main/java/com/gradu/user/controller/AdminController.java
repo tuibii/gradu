@@ -36,9 +36,13 @@ public class AdminController {
     public Result add(@RequestBody AdminEntity adminEntity){
         QueryWrapper<AdminEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(adminEntity.getLoginname()!=null,"loginname",adminEntity.getLoginname());
-        AdminEntity one = adminService.getOne(wrapper);
-        if (one!=null){
-            return  new Result(false,StatusCode.FAIL,"该账号已存在");
+        try {
+            AdminEntity one = adminService.getOne(wrapper);
+            if (one!=null){
+                return  new Result(false,StatusCode.FAIL,"该账号已存在");
+            }
+        }catch (Exception e){
+            return  new Result(false,StatusCode.FAIL,"无效的用户名");
         }
 
         adminService.add(adminEntity);
