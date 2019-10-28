@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
 
+import java.util.List;
+
 @Service
 public class AdminServiceImpl extends MPBaseServiceImpl<AdminDao, AdminEntity> implements AdminService {
 
@@ -40,6 +42,11 @@ public class AdminServiceImpl extends MPBaseServiceImpl<AdminDao, AdminEntity> i
             return  one;
         }
 
+        return null;
+    }
+
+    @Override
+    public List<Long> queryAllMenuId(Long userId) {
         return null;
     }
 }

@@ -4,18 +4,24 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.user.dto.AdminDTO;
 import com.gradu.user.entity.AdminEntity;
+import com.gradu.user.entity.SysMenuEntity;
 import com.gradu.user.service.AdminService;
 import com.gradu.user.service.CaptchaService;
+import com.gradu.user.service.SysMenuService;
 import entity.Result;
 import entity.StatusCode;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import util.JwtUtil;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletOutputStream;
 
 @RestController
@@ -31,6 +37,12 @@ public class AdminController {
 
     @Autowired
     CaptchaService captchaService;
+
+    @Autowired
+    SysMenuService sysMenuService;
+
+    @Autowired
+    HttpServletRequest request;
 
     @PostMapping
     public Result add(@RequestBody AdminEntity adminEntity){
@@ -88,6 +100,17 @@ public class AdminController {
             ImageIO.write(image, "jpg", out);
             out.close();
         }
+    }
+
+    /**
+     * 导航菜单
+     */
+    @GetMapping("/nav")
+    public Result nav(){
+        Claims claims = (Claims) request.getAttribute("token");
+        Long id = Long.valueOf(claims.getId());
+        List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(id);
+        return new Result(true,StatusCode.OK,"查询菜单成功",menuList);
     }
 
 }
