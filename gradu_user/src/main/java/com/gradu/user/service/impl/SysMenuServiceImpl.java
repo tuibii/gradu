@@ -4,10 +4,12 @@ import com.gradu.user.dao.SysMenuDao;
 import com.gradu.user.entity.SysMenuEntity;
 import com.gradu.user.service.AdminService;
 import com.gradu.user.service.SysMenuService;
+import com.gradu.user.service.SysRoleMenuService;
 import entity.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.impl.MPBaseServiceImpl;
+import util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +20,33 @@ public class SysMenuServiceImpl extends MPBaseServiceImpl<SysMenuDao, SysMenuEnt
     @Autowired
     AdminService adminService;
 
+    @Autowired
+    SysRoleMenuService sysRoleMenuService;
+
     @Override
     public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
-        return null;
+        List<SysMenuEntity> menuList = queryListParentId(parentId);
+        if(menuIdList == null){
+            return menuList;
+        }
+
+        List<SysMenuEntity> userMenuList = new ArrayList<>();
+        for(SysMenuEntity menu : menuList){
+            if(menuIdList.contains(menu.getMenuId())){
+                userMenuList.add(menu);
+            }
+        }
+        return userMenuList;
     }
 
     @Override
     public List<SysMenuEntity> queryListParentId(Long parentId) {
-        return null;
+        return baseMapper.queryListParentId(parentId);
     }
 
     @Override
     public List<SysMenuEntity> queryNotButtonList() {
-        return null;
+        return baseMapper.queryNotButtonList();
     }
 
     @Override
@@ -47,7 +63,10 @@ public class SysMenuServiceImpl extends MPBaseServiceImpl<SysMenuDao, SysMenuEnt
 
     @Override
     public void delete(Long menuId) {
-
+        //删除菜单与角色关联
+        sysRoleMenuService.removeByMap(new MapUtil().put("menu_id", menuId));
+        //删除菜单
+        this.removeById(menuId);
     }
 
     /**

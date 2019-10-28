@@ -47,6 +47,6 @@ public class AdminServiceImpl extends MPBaseServiceImpl<AdminDao, AdminEntity> i
 
     @Override
     public List<Long> queryAllMenuId(Long userId) {
-        return null;
+        return this.baseMapper.queryAllMenuId(userId);
     }
 }
