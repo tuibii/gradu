@@ -37,4 +37,9 @@ zuul:
     gradu-user:
       path: /user/**
       serviceId: gradu-user
-
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 30000
+ribbon:
+  ReadTimeout: 120000  #请求处理的超时时间
+  ConnectTimeout: 30000  #请求连接的超时时间
