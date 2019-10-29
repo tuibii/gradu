@@ -29,6 +29,6 @@ public class JwtUtil {
     }
 
     public Claims parseToken(String token){
-        return Jwts.parser().setSigningKey(privateKey).parseClaimsJwt(token).getBody();
+        return Jwts.parser().setSigningKey(privateKey).parseClaimsJws(token).getBody();
     }
 }

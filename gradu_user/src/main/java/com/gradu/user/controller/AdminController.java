@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.user.dto.AdminDTO;
 import com.gradu.user.entity.AdminEntity;
-import com.gradu.user.entity.SysMenuEntity;
 import com.gradu.user.service.AdminService;
 import com.gradu.user.service.CaptchaService;
 import com.gradu.user.service.SysMenuService;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletOutputStream;
 
 @RestController
@@ -37,9 +34,6 @@ public class AdminController {
 
     @Autowired
     CaptchaService captchaService;
-
-    @Autowired
-    SysMenuService sysMenuService;
 
     @Autowired
     HttpServletRequest request;
@@ -103,14 +97,19 @@ public class AdminController {
     }
 
     /**
-     * 导航菜单
+     *  根据 token 返回 用户信息
+     * @return
      */
-    @GetMapping("/nav")
-    public Result nav(){
-        Claims claims = (Claims) request.getAttribute("token");
-        Long id = Long.valueOf(claims.getId());
-        List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(id);
-        return new Result(true,StatusCode.OK,"查询菜单成功",menuList);
+    @GetMapping("/info")
+    public Result info(){
+        try {
+            Claims claims = (Claims) request.getAttribute("token");
+            Long id = Long.valueOf(claims.getId());
+            AdminEntity adminEntity = adminService.getById(id);
+            return new Result(true,StatusCode.OK,"success",adminEntity);
+        }catch (Exception e){
+            return new Result(false,StatusCode.FAIL,"登录失败，请重新登录！");
+        }
     }
 
 }
