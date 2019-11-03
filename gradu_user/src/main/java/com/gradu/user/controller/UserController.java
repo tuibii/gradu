@@ -2,6 +2,7 @@ package com.gradu.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.gradu.user.dto.LoginSuccessDTO;
 import com.gradu.user.entity.UserEntity;
 import com.gradu.user.service.UserService;
 import entity.Result;
@@ -42,7 +43,7 @@ public class UserController {
         wrapper.eq(StringUtils.isNotEmpty(mobile),"mobile",mobile);
         UserEntity one = userService.getOne(wrapper);
         if (one !=null){
-            return new Result(false,StatusCode.FAIL,"该账号已存在");
+            return new Result(false,StatusCode.FAIL,"该手机号已被绑定");
         }
 
         userService.sendSms(mobile);
@@ -87,7 +88,7 @@ public class UserController {
         }
 
         String token = jwtUtil.cteateToken(entity.getId(), entity.getNickname(), "user");
-        return new Result(true,StatusCode.OK,"登陆成功",token);
+        return new Result(true,StatusCode.OK,"登陆成功",new LoginSuccessDTO(token,entity.getNickname(),entity.getAvatar()));
     }
 
 
