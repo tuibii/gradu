@@ -70,4 +70,5 @@ public class GatheringEntity implements Serializable {
      */
     private String city;
 
+    private Date createtime;
 }

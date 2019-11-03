@@ -1,9 +1,10 @@
 package com.gradu.gathering.service;
 
 import com.gradu.gathering.entity.GatheringEntity;
+import service.BaseService;
 import service.MPBaseService;
 
-public interface GatheringService extends MPBaseService<GatheringEntity> {
+public interface GatheringService extends BaseService<GatheringEntity> {
 
     void add(GatheringEntity entity);
 

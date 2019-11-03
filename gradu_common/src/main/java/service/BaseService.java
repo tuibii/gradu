@@ -1,507 +1,111 @@
 package service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import entity.PageData;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 /**
  *  基础服务接口
  */
-public interface BaseService<T, D> {
-    /**
-     * 通过id获取实体
-     *
-     * @param id
-     * @return T 范型
-     */
-    T get(Serializable id) throws Exception;
+public interface BaseService<T> {
 
+    PageData<T> page(Map<String, Object> params);
+
+    List<T> list(Map<String, Object> params);
     /**
-     * 获取唯一实体
+     * <p>
+     * 插入一条记录（选择字段，策略插入）
+     * </p>
      *
-     * @param params
-     * @return T 范型
+     * @param entity 实体对象
      */
-    T getUnique(T params) throws Exception;
+    boolean insert(T entity);
 
     /**
-     * 通过id获取实体(逻辑删除)
+     * <p>
+     * 插入（批量），该方法不支持 Oracle、SQL Server
+     * </p>
      *
-     * @param id
-     * @return
-     * @throws Exception
+     * @param entityList 实体对象集合
      */
-    T getByLogic(Serializable id) throws Exception;
+    boolean insertBatch(Collection<T> entityList);
 
     /**
-     * 获取唯一实体(逻辑删除)
+     * <p>
+     * 插入（批量），该方法不支持 Oracle、SQL Server
+     * </p>
      *
-     * @param params
-     * @return T 范型
-     * @author: Guoyaochun
-     * @date: 2018年12月22日
+     * @param entityList 实体对象集合
+     * @param batchSize  插入批次数量
      */
-    T getUniqueByLogic(T params) throws Exception;
+    boolean insertBatch(Collection<T> entityList, int batchSize);
 
     /**
-     * 通过id获取DTO
+     * <p>
+     * 根据 ID 选择修改
+     * </p>
      *
-     * @param id
-     * @return D 范型
+     * @param entity 实体对象
      */
-    D getDTO(Serializable id) throws Exception;
+    boolean updateById(T entity);
 
     /**
-     * 获取唯一DTO
+     * <p>
+     * 根据 whereEntity 条件，更新记录
+     * </p>
      *
-     * @param params
-     * @return D 范型
+     * @param entity        实体对象
+     * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
      */
-    D getDTOUnique(D params) throws Exception;
+    boolean update(T entity, Wrapper<T> updateWrapper);
 
     /**
-     * 通过id获取DTO(逻辑删除)
+     * <p>
+     * 根据ID 批量更新
+     * </p>
      *
-     * @param id
-     * @return D 范型
+     * @param entityList 实体对象集合
      */
-    D getDTOByLogic(Serializable id) throws Exception;
+    boolean updateBatchById(Collection<T> entityList);
 
     /**
-     * 获取唯一DTO(逻辑删除)
+     * <p>
+     * 根据ID 批量更新
+     * </p>
      *
-     * @param params
-     * @return D 范型
+     * @param entityList 实体对象集合
+     * @param batchSize  更新批次数量
      */
-    D getDTOUniqueByLogic(D params) throws Exception;
+    boolean updateBatchById(Collection<T> entityList, int batchSize);
 
     /**
-     * 保存实体
+     * <p>
+     * 根据 ID 查询
+     * </p>
      *
-     * @param model
-     * @return T 范型
+     * @param id 主键ID
      */
-    T save(T model) throws Exception;
+    T selectById(Serializable id);
 
     /**
-     * 保存DTO
+     * <p>
+     * 根据 ID 删除
+     * </p>
      *
-     * @param model
-     * @return D 范型
+     * @param id 主键ID
      */
-    D saveDTO(D model) throws Exception;
+    boolean deleteById(Serializable id);
 
     /**
-     * 更新实体
+     * <p>
+     * 删除（根据ID 批量删除）
+     * </p>
      *
-     * @param model
-     * @return T 范型
+     * @param idList 主键ID列表
      */
-    T update(T model) throws Exception;
-
-    /**
-     * 更新DTO
-     *
-     * @param model
-     * @return D 范型
-     */
-    D updateDTO(D model) throws Exception;
-
-    /**
-     * 通过id删除实体
-     *
-     * @param id
-     * @return Integer
-     */
-    Integer deleteById(Serializable id) throws Exception;
-
-    /**
-     * 删除实体
-     *
-     * @param model
-     * @return Integer
-     */
-    Integer delete(T model) throws Exception;
-
-    /**
-     * 删除DTO
-     *
-     * @param model
-     * @return Integer
-     */
-    Integer deleteDTO(D model) throws Exception;
-
-    /**
-     * 通过id删除实体(逻辑删除)
-     *
-     * @param id
-     * @return Integer
-     */
-    Integer deleteByLogicId(Serializable id) throws Exception;
-
-    /**
-     * 删除实体(逻辑删除)
-     *
-     * @param model
-     * @return Integer
-     */
-    Integer deleteByLogic(T model) throws Exception;
-
-    /**
-     * 删除DTO(逻辑删除)
-     *
-     * @param model
-     * @return Integer
-     */
-    Integer deleteDTOByLogic(D model) throws Exception;
-
-    /**
-     * 获取实体总数量
-     *
-     * @param entity
-     * @return Long
-     */
-    Long countAll(T entity) throws Exception;
-
-    /**
-     * 获取实体总数量(逻辑)
-     *
-     * @param entity
-     * @return Long
-     */
-    Long countAllByLogic(T entity) throws Exception;
-
-    /**
-     * 获取实体列表(全部)
-     *
-     * @return List<T> 范型
-     */
-    List<T> findAll() throws Exception;
-
-    /**
-     * 获取实体列表(全部)
-     *
-     * @return List<T> 范型
-     */
-    List<T> findAllByLogic() throws Exception;
-
-    /**
-     * 获取DTO列表(全部)
-     *
-     * @return List<D> 范型
-     */
-    List<D> findAllDTO() throws Exception;
-
-    /**
-     * 获取DTO列表(全部)
-     *
-     * @return List<D> 范型
-     */
-    List<D> findAllDTOByLogic() throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params 条件参数
-     */
-    List<T> findByParams(T params) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByParams(Map<String, Object> params) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByParams(T params, String orderBy) throws Exception;
-
-    /**
-     * 获取实体列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<T> findByParams(Map<String, Object> params, String orderBy) throws Exception;
-
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByParams(D params) throws Exception;
-
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params 条件参数
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByParams(Map<String, Object> params) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByParams(D params, String orderBy) throws Exception;
-
-    /**
-     * 获取DTO列表(条件)
-     *
-     * @param params  条件参数
-     * @param orderBy 排序
-     * @return List<D>(返回值说明)
-     */
-    List<D> findDTOByParams(Map<String, Object> params, String orderBy) throws Exception;
-
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findPageData(T params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取实体列表(条件)
-//     *
-//     * @param params 条件参数
-//     * @return List<D>(返回值说明)
-//     */
-//    List<T> findByLogicParams(T params) throws Exception;
-//
-//    /**
-//     * 获取实体列表(条件)
-//     *
-//     * @param params 条件参数
-//     * @return List<D>(返回值说明)
-//     */
-//    List<T> findByLogicParams(Map<String, Object> params) throws Exception;
-//
-//    /**
-//     * 获取实体列表(条件)
-//     *
-//     * @param params  条件参数
-//     * @param orderBy 排序
-//     * @return List<D>(返回值说明)
-//     */
-//    List<T> findByLogicParams(T params, String orderBy) throws Exception;
-//
-//
-//    /**
-//     * 获取实体列表(条件)
-//     *
-//     * @param params  条件参数
-//     * @param orderBy 排序
-//     * @return List<D>(返回值说明)
-//     */
-//    List<T> findByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO列表(条件)
-//     *
-//     * @param params 条件参数
-//     * @return List<D>(返回值说明)
-//     */
-//    List<D> findDTOByLogicParams(D params) throws Exception;
-//
-//    /**
-//     * 获取DTO列表(条件)
-//     *
-//     * @param params 条件参数
-//     * @return List<D>(返回值说明)
-//     */
-//    List<D> findDTOByLogicParams(Map<String, Object> params) throws Exception;
-//
-//    /**
-//     * 获取DTO列表(条件)
-//     *
-//     * @param params  条件参数
-//     * @param orderBy 排序
-//     * @return List<D>(返回值说明)
-//     */
-//    List<D> findDTOByLogicParams(D params, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO列表(条件)
-//     *
-//     * @param params  条件参数
-//     * @param orderBy 排序
-//     * @return List<D>(返回值说明)
-//     */
-//    List<D> findDTOByLogicParams(Map<String, Object> params, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findByLogicPageData(T params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取实体分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<T> 分页列表
-//     */
-//    PageList<T> findByLogicPageData(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findByLogicPageDataDTO(D params, int pageNum, int pageSize, String orderBy) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize) throws Exception;
-//
-//    /**
-//     * 获取DTO分页列表
-//     *
-//     * @param params   查询参数
-//     * @param pageNum  页码
-//     * @param pageSize 数量
-//     * @param orderBy  排序
-//     * @return PageList<D> 分页列表
-//     */
-//    PageList<D> findByLogicPageDataDTO(Map<String, Object> params, int pageNum, int pageSize, String orderBy) throws Exception;
+    boolean deleteBatchIds(Collection<? extends Serializable> idList);
 }

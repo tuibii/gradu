@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gradu.qa.client.BaseClient;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.service.ProblemService;
-import entity.PageResult;
+import entity.PageData;
 import entity.Result;
 import entity.StatusCode;
 import io.jsonwebtoken.Claims;
@@ -38,11 +38,8 @@ public class ProblemController {
 
         Page<ProblemEntity> newProblem = problemService.getNewProblem(page, size, label);
 
-        PageResult<ProblemEntity> pageResult = new PageResult<>();
-        pageResult.setRows(newProblem.getRecords());
-        pageResult.setTotal(newProblem.getTotal());
-
-        return new Result(true, StatusCode.OK,"查询成功",pageResult);
+        PageData<ProblemEntity> pageData = new PageData<>(newProblem.getRecords(),newProblem.getTotal());
+        return new Result(true, StatusCode.OK,"查询成功", pageData);
     }
 
     @GetMapping("/hotproblem/{label}/{page}/{size}")
@@ -50,11 +47,8 @@ public class ProblemController {
 
         Page<ProblemEntity> hotProblem = problemService.getHotProblem(page, size, label);
 
-        PageResult<ProblemEntity> pageResult = new PageResult<>();
-        pageResult.setRows(hotProblem.getRecords());
-        pageResult.setTotal(hotProblem.getTotal());
-
-        return new Result(true, StatusCode.OK,"查询成功",pageResult);
+        PageData<ProblemEntity> pageData = new PageData<>(hotProblem.getRecords(),hotProblem.getTotal());
+        return new Result(true, StatusCode.OK,"查询成功", pageData);
     }
 
     @PostMapping

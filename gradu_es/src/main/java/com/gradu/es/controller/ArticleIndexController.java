@@ -2,7 +2,7 @@ package com.gradu.es.controller;
 
 import com.gradu.es.entity.ArticleIndexEntity;
 import com.gradu.es.service.ArticleIndexService;
-import entity.PageResult;
+import entity.PageData;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,8 @@ public class ArticleIndexController {
     @GetMapping("/{key}/{page}/{size}")
     public Result selectByKey(@PathVariable("key")String key,@PathVariable("page") int page,@PathVariable("size") int size){
         Page<ArticleIndexEntity> entityPage = articleIndexService.selectByKey(key,page,size);
-        PageResult<ArticleIndexEntity> pageResult = new PageResult<>();
-        pageResult.setTotal(entityPage.getTotalElements());
-        pageResult.setRows(entityPage.getContent());
-        return new Result(true,StatusCode.OK,"查询成功",pageResult);
+        PageData<ArticleIndexEntity> pageData = new PageData<>(entityPage.getContent(),entityPage.getTotalElements());
+        return new Result(true,StatusCode.OK,"查询成功", pageData);
     }
 
 }

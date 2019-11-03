@@ -3,7 +3,7 @@ package com.gradu.base.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gradu.base.entity.LabelEntity;
 import com.gradu.base.serice.LabelService;
-import entity.PageResult;
+import entity.PageData;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,10 +92,8 @@ public class LabelController {
     @PostMapping("/search/{page}/{size}")
     public Result getSearchPage(@PathVariable("page") int page,@PathVariable("size") int size,LabelEntity entity){
         IPage<LabelEntity> labelPage = labelService.getLabelPage(page, size, entity);
-        PageResult<LabelEntity> pageResult = new PageResult<>();
-        pageResult.setRows(labelPage.getRecords());
-        pageResult.setTotal(labelPage.getTotal());
-        return new Result(true,StatusCode.OK,"查询成功",pageResult);
+        PageData<LabelEntity> pageData = new PageData<>(labelPage.getRecords(),labelPage.getTotal());
+        return new Result(true,StatusCode.OK,"查询成功", pageData);
     }
 
 
