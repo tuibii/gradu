@@ -1,5 +1,6 @@
 package com.gradu.treehole.controller;
 
+import com.gradu.treehole.entity.TreeholeEntity;
 import com.gradu.treehole.service.TreeholeService;
 import entity.Result;
 import entity.StatusCode;
@@ -19,13 +20,31 @@ public class TreeholeController {
     RedisTemplate redisTemplate;
 
     @GetMapping
-    public Result findAll(){
-        return new Result(true, StatusCode.OK,"查询成功",treeholeService.findAll());
+    public Result list(){
+        return new Result(true, StatusCode.OK,"查询成功",treeholeService.list());
     }
 
     @GetMapping("/{id}")
     public Result findById(@PathVariable("id") String id){
         return new Result(true,StatusCode.OK,"查询成功",treeholeService.selectById(id));
+    }
+
+    @PostMapping
+    public Result insert(@RequestBody TreeholeEntity entity){
+        treeholeService.add(entity);
+        return new Result(true,StatusCode.OK,"添加成功");
+    }
+
+    @PutMapping
+    public Result update(@RequestBody TreeholeEntity entity){
+        treeholeService.update(entity);
+        return new Result(true,StatusCode.OK,"修改");
+    }
+
+    @DeleteMapping("{id}")
+    public Result delete(@PathVariable("id") String id){
+        treeholeService.deleteById(id);
+        return new Result(true,StatusCode.OK,"添加成功");
     }
 
     @GetMapping("/thumbup/{treeholeid}")

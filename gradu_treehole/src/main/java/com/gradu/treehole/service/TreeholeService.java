@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TreeholeService {
 
-    List<TreeholeEntity> findAll();
+    List<TreeholeEntity> list();
 
     TreeholeEntity selectById(String id);
 

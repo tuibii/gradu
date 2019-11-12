@@ -30,7 +30,7 @@ public class TreeholeServiceImpl implements TreeholeService {
     RedisTemplate redisTemplate;
 
     @Override
-    public List<TreeholeEntity> findAll() {
+    public List<TreeholeEntity> list() {
         return treeholeDao.findAll();
     }
 
