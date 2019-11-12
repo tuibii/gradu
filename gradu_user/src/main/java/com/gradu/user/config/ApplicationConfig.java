@@ -14,6 +14,8 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/admin/login/**","/admin/captcha/**");
+        registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/admin/login/**","/admin/captcha/**",
+                        "/user/login/**","/user/regist/**","/user/send/**");
     }
 }

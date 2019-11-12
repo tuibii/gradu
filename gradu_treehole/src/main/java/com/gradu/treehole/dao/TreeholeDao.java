@@ -1,12 +1,12 @@
 package com.gradu.treehole.dao;
 
 import com.gradu.treehole.entity.TreeholeEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
 
 public interface TreeholeDao extends MongoRepository<TreeholeEntity,String> {
 
-    Page<TreeholeEntity> findTreeholeEntitiesByParentid(String parentid, Pageable pageable);
+    List<TreeholeEntity> findTreeholeEntitiesByParentid(String parentid);
 
 }

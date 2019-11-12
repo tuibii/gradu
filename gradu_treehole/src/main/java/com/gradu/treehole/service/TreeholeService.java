@@ -1,7 +1,6 @@
 package com.gradu.treehole.service;
 
 import com.gradu.treehole.entity.TreeholeEntity;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface TreeholeService {
 
     void deleteById(String id);
 
-    Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid, int page, int size);
+    List<TreeholeEntity> findTreeholeEntityByParentid(String parentid);
 
     void thumbup(String userid,String treeholeid);
 

@@ -74,9 +74,8 @@ public class TreeholeServiceImpl implements TreeholeService {
     }
 
     @Override
-    public Page<TreeholeEntity> findTreeholeEntityByParentid(String parentid, int page, int size) {
-        Pageable pageable = PageRequest.of(page-1,size);
-        return treeholeDao.findTreeholeEntitiesByParentid(parentid,pageable);
+    public List<TreeholeEntity> findTreeholeEntityByParentid(String parentid) {
+        return treeholeDao.findTreeholeEntitiesByParentid(parentid);
     }
 
     @Transactional(rollbackFor = Exception.class)

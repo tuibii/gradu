@@ -24,6 +24,11 @@ public class TreeholeController {
         return new Result(true, StatusCode.OK,"查询成功",treeholeService.list());
     }
 
+    @GetMapping("/commentlist/{id}")
+    public Result commentlist(@PathVariable("id")String id){
+        return new Result(true,StatusCode.OK,"查询成功",treeholeService.findTreeholeEntityByParentid(id));
+    }
+
     @GetMapping("/{id}")
     public Result findById(@PathVariable("id") String id){
         return new Result(true,StatusCode.OK,"查询成功",treeholeService.selectById(id));
