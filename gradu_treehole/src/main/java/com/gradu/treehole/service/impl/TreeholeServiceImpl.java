@@ -31,13 +31,14 @@ public class TreeholeServiceImpl implements TreeholeService {
 
     @Override
     public List<TreeholeEntity> list() {
-        return treeholeDao.findAll();
+        return treeholeDao.findByParentidIsNullAndStateEquals("1");
     }
 
     @Cacheable(cacheNames = "treehole",key = "#id")
     @Override
     public TreeholeEntity selectById(String id) {
-        return treeholeDao.findById(id).get();
+        TreeholeEntity treeholeEntity = treeholeDao.findById(id).get();
+        return treeholeEntity;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -51,15 +52,9 @@ public class TreeholeServiceImpl implements TreeholeService {
         entity.setState("1");
         entity.setComment(0);
         treeholeDao.save(entity);
-
-        if (entity.getParentid()!=null && !"".equals(entity.getParentid())){
-            TreeholeEntity parentTree = selectById(entity.getParentid());
-            parentTree.setComment(parentTree.getComment()+1);
-            update(parentTree);
-        }
     }
 
-    @CacheEvict(cacheNames = "treehole",key = "entity._id")
+    @CacheEvict(cacheNames = "treehole",key = "#entity._id")
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(TreeholeEntity entity) {

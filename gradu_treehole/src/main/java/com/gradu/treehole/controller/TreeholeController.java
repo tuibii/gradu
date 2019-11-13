@@ -31,13 +31,25 @@ public class TreeholeController {
 
     @GetMapping("/{id}")
     public Result findById(@PathVariable("id") String id){
-        return new Result(true,StatusCode.OK,"查询成功",treeholeService.selectById(id));
+        TreeholeEntity treeholeEntity = treeholeService.selectById(id);
+        treeholeEntity.setThumbup(treeholeEntity.getThumbup()+1);
+        treeholeService.update(treeholeEntity);
+        return new Result(true,StatusCode.OK,"查询成功", treeholeEntity);
     }
 
     @PostMapping
     public Result insert(@RequestBody TreeholeEntity entity){
+        if (entity.getParentid() != null){
+            TreeholeEntity parentTreeHole = treeholeService.selectById(entity.getParentid());
+            if (parentTreeHole != null){
+                parentTreeHole.setComment(parentTreeHole.getComment()+1);
+                treeholeService.update(parentTreeHole);
+            }else {
+                return new Result(false,StatusCode.FAIL,"该树洞不存在");
+            }
+        }
         treeholeService.add(entity);
-        return new Result(true,StatusCode.OK,"添加成功");
+        return new Result(true,StatusCode.OK,"发送成功");
     }
 
     @PutMapping
