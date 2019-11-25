@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -33,22 +34,10 @@ public class ProblemController {
         return baseClient.getLabelById(id);
     }
 
-    @GetMapping("/newproblem/{label}/{page}/{size}")
-    public Result getNewList(@PathVariable("label") String label, @PathVariable("page") int page,@PathVariable("size") int size){
-
-        Page<ProblemEntity> newProblem = problemService.getNewProblem(page, size, label);
-
-        PageData<ProblemEntity> pageData = new PageData<>(newProblem.getRecords(),newProblem.getTotal());
-        return new Result(true, StatusCode.OK,"查询成功", pageData);
-    }
-
-    @GetMapping("/hotproblem/{label}/{page}/{size}")
-    public Result getHotList(@PathVariable("label") String label, @PathVariable("page") int page,@PathVariable("size") int size){
-
-        Page<ProblemEntity> hotProblem = problemService.getHotProblem(page, size, label);
-
-        PageData<ProblemEntity> pageData = new PageData<>(hotProblem.getRecords(),hotProblem.getTotal());
-        return new Result(true, StatusCode.OK,"查询成功", pageData);
+    @GetMapping("/page")
+    public Result page(@RequestParam Map<String, Object> params){
+        PageData<ProblemEntity> page = problemService.page(params);
+        return new Result(true, StatusCode.OK,"查询成功",page);
     }
 
     @PostMapping

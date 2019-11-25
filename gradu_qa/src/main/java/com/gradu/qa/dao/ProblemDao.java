@@ -10,7 +10,4 @@ import java.util.List;
 @Mapper
 public interface ProblemDao extends BaseMapper<ProblemEntity> {
 
-    List<ProblemEntity> newProblemList(String labelid);
-
-    List<ProblemEntity> hotProblemList(String labelid);
 }
