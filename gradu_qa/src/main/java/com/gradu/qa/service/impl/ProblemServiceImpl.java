@@ -1,7 +1,6 @@
 package com.gradu.qa.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gradu.qa.dao.ProblemDao;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.service.ProblemService;
@@ -11,10 +10,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.impl.BaseServiceImpl;
-import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
 
-import java.util.List;
 import java.util.Map;
 
 @Service

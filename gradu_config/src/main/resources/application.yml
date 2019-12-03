@@ -6,8 +6,8 @@ spring:
       server:
         git:
           uri: "https://github.com/tuibii/gradu_config.git"
-          username: tuibii
-          password: wyl995..
+          username: tuibii@163.com
+          password: wuyiliang1998
   rabbitmq:
     host: 47.97.162.247
 server:
