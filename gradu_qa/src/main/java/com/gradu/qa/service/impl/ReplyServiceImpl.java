@@ -1,5 +1,6 @@
 package com.gradu.qa.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gradu.qa.dao.ReplyDao;
 import com.gradu.qa.entity.ReplyEntity;
 import com.gradu.qa.service.ReplyService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
+
+import java.util.List;
 
 @Service
 public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> implements ReplyService {
@@ -42,5 +45,12 @@ public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> i
     @Override
     public ReplyEntity selectById(String id) {
         return this.baseMapper.selectById(id);
+    }
+
+    @Override
+    public List<ReplyEntity> listByProblemId(String problemId) {
+        QueryWrapper<ReplyEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("problemid",problemId);
+        return baseMapper.selectList(wrapper);
     }
 }

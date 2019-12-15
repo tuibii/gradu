@@ -79,6 +79,12 @@ public class ProblemController {
         return new Result(true, StatusCode.OK,"查询成功",page);
     }
 
+    @GetMapping("/{id}")
+    public Result getById(@PathVariable("id") String id){
+        ProblemEntity entity = problemService.selectById(id);
+        return new Result(true,StatusCode.OK,"查询成功",entity);
+    }
+
     @PostMapping
     public Result add(@RequestBody ProblemEntity problemEntity){
 
