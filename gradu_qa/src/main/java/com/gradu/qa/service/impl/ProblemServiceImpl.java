@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import service.impl.BaseServiceImpl;
 import util.IdWorker;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Service
