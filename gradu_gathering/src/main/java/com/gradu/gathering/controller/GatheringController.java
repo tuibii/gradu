@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
-@CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping("/gathering")
 public class GatheringController {
 

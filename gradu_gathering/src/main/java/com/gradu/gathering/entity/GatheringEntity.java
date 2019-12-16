@@ -1,6 +1,7 @@
 package com.gradu.gathering.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -43,11 +44,13 @@ public class GatheringEntity implements Serializable {
     /**
      *  开始时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date starttime;
 
     /**
      *  截止时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date endtime;
 
     /**
@@ -58,6 +61,7 @@ public class GatheringEntity implements Serializable {
     /**
      *  报名截止
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date enrolltime;
 
     /**
@@ -70,5 +74,6 @@ public class GatheringEntity implements Serializable {
      */
     private String city;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date createtime;
 }
