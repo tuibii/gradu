@@ -47,4 +47,12 @@ public class ReplyEntity implements Serializable {
      *  回答人昵称
      */
     private String nickname;
+    /**
+     *  评分数
+     */
+    private Double rate;
+    /**
+     *  评分人数
+     */
+    private Integer rateCount;
 }

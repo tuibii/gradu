@@ -102,20 +102,22 @@ public class ProblemController {
     @GetMapping("/thumbup/{id}")
     public Result thumbup(@PathVariable("id") String id,HttpServletRequest request){
         String token = request.getHeader("token");
-        try {
-            Claims claims = jwtUtil.parseToken(token);
-            String user = claims.getId();
-            if (StringUtils.isNotEmpty(user)){
-                Long add = redisTemplate.opsForSet().add("problem:" + id, user);
-                if (add > 0){
-                    ProblemEntity entity = problemService.selectById(id);
-                    entity.setThumbup(entity.getThumbup()+1);
-                    problemService.update(entity);
-                    return new Result(true,StatusCode.OK,"点赞成功");
+        if (StringUtils.isNotEmpty(token)){
+            try {
+                Claims claims = jwtUtil.parseToken(token);
+                String user = claims.getId();
+                if (StringUtils.isNotEmpty(user)){
+                    Long add = redisTemplate.opsForSet().add("problem:" + id, user);
+                    if (add > 0){
+                        ProblemEntity entity = problemService.selectById(id);
+                        entity.setThumbup(entity.getThumbup()+1);
+                        problemService.update(entity);
+                        return new Result(true,StatusCode.OK,"点赞成功");
+                    }
                 }
+            }catch (Exception e){
+                return new Result(false,StatusCode.ACCESS_ERROR,"请先登录！");
             }
-        }catch (Exception e){
-            return new Result(false,StatusCode.ACCESS_ERROR,"请先登录！");
         }
         return new Result(false,StatusCode.FAIL,"点赞失败");
     }

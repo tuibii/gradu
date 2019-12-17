@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +25,10 @@ public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> i
     @Override
     public void add(ReplyEntity replyEntity) {
         replyEntity.setId(String.valueOf(idWorker));
+        replyEntity.setCreatetime(new Date());
+        replyEntity.setUpdatetime(new Date());
+        replyEntity.setRate(0.0);
+        replyEntity.setRateCount(0);
         this.baseMapper.insert(replyEntity);
     }
 
