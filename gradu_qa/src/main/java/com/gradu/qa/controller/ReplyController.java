@@ -64,6 +64,7 @@ public class ReplyController {
                 return new Result(true,StatusCode.OK,"回答成功");
 
             }catch (Exception e){
+                e.printStackTrace();
                 return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
             }
         }

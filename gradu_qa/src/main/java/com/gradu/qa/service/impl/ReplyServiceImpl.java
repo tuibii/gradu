@@ -24,7 +24,7 @@ public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> i
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void add(ReplyEntity replyEntity) {
-        replyEntity.setId(String.valueOf(idWorker));
+        replyEntity.setId(String.valueOf(idWorker.nextId()));
         replyEntity.setCreatetime(new Date());
         replyEntity.setUpdatetime(new Date());
         replyEntity.setRate(0.0);
@@ -56,6 +56,7 @@ public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> i
     public List<ReplyEntity> listByProblemId(String problemId) {
         QueryWrapper<ReplyEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("problemid",problemId);
+        wrapper.orderByDesc("createtime");
         return baseMapper.selectList(wrapper);
     }
 }

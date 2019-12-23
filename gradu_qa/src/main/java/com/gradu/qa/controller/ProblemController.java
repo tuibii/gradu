@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author wuyiliang
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/problem")
@@ -46,35 +49,31 @@ public class ProblemController {
     }
 
     @GetMapping("/page")
-    public Result page(@RequestParam Map<String, Object> params,HttpServletRequest request){
+    public Result page(@RequestParam Map<String, Object> params){
         PageData<ProblemEntity> page = problemService.page(params);
 
-        String token = request.getHeader("token");
-        if (StringUtils.isNotEmpty(token)){
-            try {
-                Claims claims = jwtUtil.parseToken(token);
-                String id = claims.getId();
+        Claims claims = (Claims) request.getAttribute("claims");
 
-                if (StringUtils.isNotEmpty(id)){
-                    List<ProblemEntity> rows = page.getRows();
-                    List<ProblemDTO> dtoList = new ArrayList<>();
-                    for (ProblemEntity entity:rows){
-                        ProblemDTO dto = new ProblemDTO();
-                        BeanUtils.copyProperties(entity,dto);
-                        System.out.println(redisTemplate.opsForSet().members("problem:"+dto.getId()));
-                        if (redisTemplate.opsForSet().isMember("problem:"+dto.getId(),id)){
-                            dto.setCanThumbup(true);
-                        }else {
-                            dto.setCanThumbup(false);
-                        }
-                        dtoList.add(dto);
+        if (claims != null){
+            String id = claims.getId();
+            if (StringUtils.isNotEmpty(id)){
+                List<ProblemEntity> rows = page.getRows();
+                List<ProblemDTO> dtoList = new ArrayList<>();
+                for (ProblemEntity entity:rows){
+                    ProblemDTO dto = new ProblemDTO();
+                    BeanUtils.copyProperties(entity,dto);
+                    System.out.println(redisTemplate.opsForSet().members("problem:"+dto.getId()));
+                    if (redisTemplate.opsForSet().isMember("problem:"+dto.getId(),id)){
+                        dto.setCanThumbup(true);
+                    }else {
+                        dto.setCanThumbup(false);
                     }
-                    return new Result(true, StatusCode.OK,"查询成功",new PageData<>(dtoList,page.getTotal()));
+                    dtoList.add(dto);
                 }
-            }catch (Exception e){
-                return new Result(true, StatusCode.OK,"查询成功",page);
+                return new Result(true, StatusCode.OK,"查询成功",new PageData<>(dtoList,page.getTotal()));
             }
         }
+
 
         return new Result(true, StatusCode.OK,"查询成功",page);
     }
@@ -88,10 +87,10 @@ public class ProblemController {
     @PostMapping
     public Result add(@RequestBody ProblemEntity problemEntity){
 
-        Claims claims = (Claims) request.getAttribute("token");
+        Claims claims = (Claims) request.getAttribute("claims");
         String role = (String) claims.get("role");
 
-        if (StringUtils.isEmpty(role) || !role.equals("user")){
+        if (StringUtils.isEmpty(role) || !"user".equals(role)){
             return new Result(false,StatusCode.ACCESS_ERROR,"权限不足");
         }
 
@@ -100,26 +99,37 @@ public class ProblemController {
     }
 
     @GetMapping("/thumbup/{id}")
-    public Result thumbup(@PathVariable("id") String id,HttpServletRequest request){
-        String token = request.getHeader("token");
-        if (StringUtils.isNotEmpty(token)){
-            try {
-                Claims claims = jwtUtil.parseToken(token);
-                String user = claims.getId();
-                if (StringUtils.isNotEmpty(user)){
-                    Long add = redisTemplate.opsForSet().add("problem:" + id, user);
-                    if (add > 0){
-                        ProblemEntity entity = problemService.selectById(id);
-                        entity.setThumbup(entity.getThumbup()+1);
-                        problemService.update(entity);
-                        return new Result(true,StatusCode.OK,"点赞成功");
-                    }
+    public Result thumbup(@PathVariable("id") String id){
+        Claims claims = (Claims) request.getAttribute("claims");
+        if (claims != null){
+            String user = claims.getId();
+            if (StringUtils.isNotEmpty(user)){
+                Long add = redisTemplate.opsForSet().add("problem:" + id, user);
+                if (add > 0){
+                    ProblemEntity entity = problemService.selectById(id);
+                    entity.setThumbup(entity.getThumbup()+1);
+                    problemService.update(entity);
+                    return new Result(true,StatusCode.OK,"点赞成功");
                 }
-            }catch (Exception e){
-                return new Result(false,StatusCode.ACCESS_ERROR,"请先登录！");
             }
         }
+
         return new Result(false,StatusCode.FAIL,"点赞失败");
+    }
+
+    @GetMapping("/focus/{id}")
+    public Result focus(@PathVariable("id") String id){
+        Claims claims = (Claims) request.getAttribute("claims");
+
+        if (claims != null){
+            String user = claims.getId();
+            if (StringUtils.isNotEmpty(user)){
+                problemService.focus(id,user);
+                return new Result(true,StatusCode.OK,"关注成功");
+            }
+        }
+
+        return new Result(false,StatusCode.FAIL,"关注失败");
     }
 
 }

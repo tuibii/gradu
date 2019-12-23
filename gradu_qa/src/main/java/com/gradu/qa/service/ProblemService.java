@@ -16,4 +16,5 @@ public interface ProblemService extends BaseService<ProblemEntity> {
 
     ProblemEntity selectById(String id);
 
+    void focus(String id, String user);
 }

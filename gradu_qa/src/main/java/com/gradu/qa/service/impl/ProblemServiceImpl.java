@@ -49,6 +49,11 @@ public class ProblemServiceImpl extends BaseServiceImpl<ProblemDao, ProblemEntit
         return this.baseDao.selectById(id);
     }
 
+    @Override
+    public void focus(String id, String user) {
+
+    }
+
 
     @Override
     public QueryWrapper<ProblemEntity> getWrapper(Map<String, Object> params) {

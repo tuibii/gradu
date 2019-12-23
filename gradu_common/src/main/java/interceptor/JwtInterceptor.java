@@ -23,11 +23,10 @@ public class JwtInterceptor implements HandlerInterceptor {
                 Claims claims = jwtUtil.parseToken(token);
                 String role = (String)claims.get("role");
                 if (StringUtils.isNotEmpty(role)){
-                    request.setAttribute("token",claims);
+                    request.setAttribute("claims",claims);
                 }
             }catch (Exception e){
-                e.printStackTrace();
-                throw new RuntimeException("权限不足!");
+                System.out.println("未登录用户"+request.getRemoteAddr()+"访问:"+request.getRequestURI());
             }
         }
 
