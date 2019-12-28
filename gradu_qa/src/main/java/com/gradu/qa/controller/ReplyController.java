@@ -1,6 +1,7 @@
 package com.gradu.qa.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.gradu.qa.dto.ReplyDTO;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.entity.ReplyEntity;
 import com.gradu.qa.service.ProblemService;
@@ -33,67 +34,76 @@ public class ReplyController {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    HttpServletRequest request;
+
     @GetMapping("/problem/{id}")
     public Result getByProblemId(@PathVariable("id") String id){
-        List<ReplyEntity> replyEntityList = replyService.listByProblemId(id);
-        return new Result(true, StatusCode.OK, "查询成功", replyEntityList);
+        List<ReplyDTO> replyDTOS = replyService.listByProblemId(id);
+
+        Claims claims = (Claims) request.getAttribute("claims");
+
+        if (claims != null){
+            String userid = claims.getId();
+            if (StringUtils.isNotEmpty(userid)){
+                replyDTOS.forEach(item -> {
+                    System.out.println(redisTemplate.opsForSet().members("problem:reply:rate:" + item.getId()));
+                    if (redisTemplate.opsForSet().isMember("problem:reply:rate:" + item.getId(),userid)) {
+                        item.setCanRate(false);
+                    }else {
+                        item.setCanRate(true);
+                    }
+                });
+            }
+        }else {
+            replyDTOS.forEach(item -> item.setCanRate(true));
+        }
+
+        return new Result(true, StatusCode.OK, "查询成功", replyDTOS);
     }
 
     @PostMapping
-    public Result add(@RequestBody ReplyEntity entity, HttpServletRequest request){
+    public Result add(@RequestBody ReplyEntity entity){
 
-        String token = request.getHeader("token");
+        Claims claims = (Claims) request.getAttribute("claims");
 
-        if (StringUtils.isNotEmpty(token)){
-            try {
-                Claims claims = jwtUtil.parseToken(token);
-                String id = claims.getId();
-                String subject = claims.getSubject();
+        if (claims !=null){
+            String id = claims.getId();
+            String subject = claims.getSubject();
 
-                ProblemEntity problemEntity = problemService.selectById(entity.getProblemid());
-                if (problemEntity == null){
-                    return new Result(false,StatusCode.FAIL,"该问题已被删除");
-                }
-
-                problemEntity.setReply(problemEntity.getReply()+1);
-                entity.setUserid(id);
-                entity.setNickname(subject);
-                replyService.add(entity);
-                problemService.update(problemEntity);
-
-                return new Result(true,StatusCode.OK,"回答成功");
-
-            }catch (Exception e){
-                e.printStackTrace();
-                return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
+            ProblemEntity problemEntity = problemService.selectById(entity.getProblemid());
+            if (problemEntity == null){
+                return new Result(false,StatusCode.FAIL,"该问题已被删除");
             }
+
+            problemEntity.setReply(problemEntity.getReply()+1);
+            entity.setUserid(id);
+            entity.setNickname(subject);
+            replyService.add(entity);
+            problemService.update(problemEntity);
+
+            return new Result(true,StatusCode.OK,"回答成功");
         }
-        return new Result(false,StatusCode.LOGIN_ERROR,"请先登录");
+
+        return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
     }
 
-    @GetMapping("/rate/{id}")
-    public Result rate(@PathVariable("id") String id, HttpServletRequest request, Double rate){
-        String token = request.getHeader("token");
-        if (StringUtils.isNotEmpty(token)){
-            try{
-                Claims claims = jwtUtil.parseToken(token);
-                String userId = claims.getId();
+    @PutMapping("/rate/{id}")
+    public Result rate(@PathVariable("id") String id, @RequestBody ReplyDTO rate){
+        Claims claims = (Claims) request.getAttribute("claims");
 
-                ReplyEntity replyEntity = replyService.selectById(id);
-                if (replyEntity != null){
-                    double sumRate = replyEntity.getRate() * replyEntity.getRateCount();
-                    replyEntity.setRate((sumRate + rate) / (replyEntity.getRateCount() + 1));
-                    replyEntity.setRateCount(replyEntity.getRateCount() + 1);
-                    replyService.update(replyEntity);
-                    redisTemplate.opsForSet().add("problem:reply:rate:" + id, userId);
-                    return new Result(true,StatusCode.OK,"评分成功");
-                }else {
-                    return new Result(false,StatusCode.FAIL,"该回答已被删除");
-                }
-            }catch (Exception e){
-                return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
+        if (claims != null){
+            String userId = claims.getId();
+
+            ReplyEntity replyEntity = replyService.selectById(id);
+            if (replyEntity != null){
+                replyService.rate(userId,rate.getRate(),replyEntity);
+                return new Result(true,StatusCode.OK,"评分成功");
+            }else {
+                return new Result(false,StatusCode.FAIL,"该回答已被删除");
             }
         }
-        return new Result();
+
+        return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
     }
 }

@@ -1,5 +1,6 @@
 package com.gradu.qa.service;
 
+import com.gradu.qa.dto.ReplyDTO;
 import com.gradu.qa.entity.ReplyEntity;
 import service.MPBaseService;
 
@@ -15,5 +16,7 @@ public interface ReplyService extends MPBaseService<ReplyEntity> {
 
     ReplyEntity selectById(String id);
 
-    List<ReplyEntity> listByProblemId(String problemId);
+    List<ReplyDTO> listByProblemId(String problemId);
+
+    void rate(String userid, Double rate, ReplyEntity replyEntity);
 }
