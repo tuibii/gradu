@@ -1,5 +1,6 @@
 package com.gradu.qa.service.impl;
 
+import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gradu.qa.dao.ReplyDao;
 import com.gradu.qa.dto.ReplyDTO;
@@ -79,8 +80,9 @@ public class ReplyServiceImpl extends MPBaseServiceImpl<ReplyDao, ReplyEntity> i
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void rate(String userId, Double rate, ReplyEntity replyEntity) {
-        double sumRate = replyEntity.getRate() * replyEntity.getRateCount();
-        replyEntity.setRate((sumRate + rate) / (replyEntity.getRateCount() + 1));
+        double sumRate = NumberUtil.mul(replyEntity.getRate(), replyEntity.getRateCount()).doubleValue();
+        double rateVal = NumberUtil.div(sumRate + rate, replyEntity.getRateCount() + 1, 2);
+        replyEntity.setRate(rateVal);
         replyEntity.setRateCount(replyEntity.getRateCount() + 1);
         this.update(replyEntity);
         redisTemplate.opsForSet().add("problem:reply:rate:" + replyEntity.getId(), userId);
