@@ -5,6 +5,7 @@ import com.gradu.qa.client.BaseClient;
 import com.gradu.qa.dto.ProblemDTO;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.service.ProblemService;
+import com.gradu.qa.service.ProblemUserService;
 import entity.PageData;
 import entity.Result;
 import entity.StatusCode;
@@ -43,6 +44,9 @@ public class ProblemController {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    ProblemUserService problemUserService;
+
     @GetMapping("/label/{id}")
     public Result findlabel(@PathVariable("id") String id){
         return baseClient.getLabelById(id);
@@ -80,7 +84,17 @@ public class ProblemController {
 
     @GetMapping("/{id}")
     public Result getById(@PathVariable("id") String id){
+        Claims claims = (Claims) request.getAttribute("claims");
         ProblemEntity entity = problemService.selectById(id);
+        if (claims != null){
+            String userid = claims.getId();
+            if (StringUtils.isNotEmpty(userid)){
+                ProblemDTO dto = new ProblemDTO();
+                BeanUtils.copyProperties(entity,dto);
+                dto.setFocus(problemUserService.focus(userid,id));
+                return new Result(true,StatusCode.OK,"查询成功",dto);
+            }
+        }
         return new Result(true,StatusCode.OK,"查询成功",entity);
     }
 

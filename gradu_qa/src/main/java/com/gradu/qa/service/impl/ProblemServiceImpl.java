@@ -1,9 +1,12 @@
 package com.gradu.qa.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.qa.dao.ProblemDao;
 import com.gradu.qa.entity.ProblemEntity;
+import com.gradu.qa.entity.ProblemUserEntity;
 import com.gradu.qa.service.ProblemService;
+import com.gradu.qa.service.ProblemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +23,9 @@ public class ProblemServiceImpl extends BaseServiceImpl<ProblemDao, ProblemEntit
 
     @Autowired
     IdWorker idWorker;
+
+    @Autowired
+    ProblemUserService problemUserService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -51,7 +57,12 @@ public class ProblemServiceImpl extends BaseServiceImpl<ProblemDao, ProblemEntit
 
     @Override
     public void focus(String id, String user) {
-
+        if (StringUtils.isNotEmpty(id) && StringUtils.isNotEmpty(user)){
+            ProblemUserEntity problemUserEntity = new ProblemUserEntity();
+            problemUserEntity.setProblemid(id);
+            problemUserEntity.setUserid(user);
+            problemUserService.insert(problemUserEntity);
+        }
     }
 
 

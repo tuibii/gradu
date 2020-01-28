@@ -37,4 +37,9 @@ public class ProblemDTO{
      *  是否点赞
      */
     private Boolean canThumbup;
+
+    /**
+     *  是否关注该问题
+     */
+    private Boolean focus;
 }
