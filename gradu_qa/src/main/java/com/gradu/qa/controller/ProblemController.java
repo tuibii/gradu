@@ -102,14 +102,15 @@ public class ProblemController {
     public Result add(@RequestBody ProblemEntity problemEntity){
 
         Claims claims = (Claims) request.getAttribute("claims");
-        String role = (String) claims.get("role");
 
-        if (StringUtils.isEmpty(role) || !"user".equals(role)){
-            return new Result(false,StatusCode.ACCESS_ERROR,"权限不足");
+        if (claims != null) {
+            String id = claims.getId();
+            problemEntity.setUserid(id);
+            problemService.add(problemEntity);
+            return new Result(true, StatusCode.OK, "添加成功");
         }
 
-        problemService.add(problemEntity);
-        return new Result(true,StatusCode.OK,"添加成功");
+        return new Result(false,StatusCode.FAIL,"请先登录");
     }
 
     @GetMapping("/thumbup/{id}")

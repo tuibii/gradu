@@ -16,6 +16,7 @@ import service.impl.BaseServiceImpl;
 import util.IdWorker;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -31,6 +32,11 @@ public class ProblemServiceImpl extends BaseServiceImpl<ProblemDao, ProblemEntit
     @Override
     public void add(ProblemEntity problemEntity) {
         problemEntity.setId(String.valueOf(idWorker.nextId()));
+        problemEntity.setCreatetime(new Date());
+        problemEntity.setUpdatetime(new Date());
+        problemEntity.setVisits(0);
+        problemEntity.setThumbup(0);
+        problemEntity.setReply(0);
         this.baseDao.insert(problemEntity);
     }
 
