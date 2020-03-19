@@ -2,6 +2,9 @@ server:
   port: 9002
 
 spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: gradu-qa
   datasource:
