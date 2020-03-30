@@ -29,4 +29,10 @@ public class GatheringController {
         return new Result(true, StatusCode.OK,"查询成功",gatheringEntity);
     }
 
+    @PostMapping
+    public Result save (@RequestBody GatheringEntity entity) {
+        gatheringService.add(entity);
+        return new Result(true, StatusCode.OK, "发布成功");
+    }
 }
+
