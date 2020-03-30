@@ -32,4 +32,4 @@ oss:
     accessKeySecret: clXWACNPstus8DYTeQmUuE77XY8xXk
     bucketName: gradu-boyan
     endPoint: oss-cn-shenzhen.aliyuncs.com
-    domain: gradu-boyan.oss-cn-shenzhen.aliyuncs.com
+    domain: https://gradu-boyan.oss-cn-shenzhen.aliyuncs.com
