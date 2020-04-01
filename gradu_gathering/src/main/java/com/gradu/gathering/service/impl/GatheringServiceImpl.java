@@ -13,6 +13,7 @@ import service.impl.BaseServiceImpl;
 import service.impl.MPBaseServiceImpl;
 import util.IdWorker;
 
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -25,6 +26,8 @@ public class GatheringServiceImpl extends BaseServiceImpl<GatheringDao, Gatherin
     @Override
     public void add(GatheringEntity entity) {
         entity.setId(String.valueOf(idWorker.nextId()));
+        entity.setState("1");
+        entity.setCreatetime(new Date());
         this.baseDao.insert(entity);
     }
 

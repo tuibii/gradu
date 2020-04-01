@@ -33,3 +33,7 @@ oss:
     bucketName: gradu-boyan
     endPoint: oss-cn-shenzhen.aliyuncs.com
     domain: https://gradu-boyan.oss-cn-shenzhen.aliyuncs.com
+
+token:
+  config:
+    private_key: "JXU1MzVBJXU3ODFB"
