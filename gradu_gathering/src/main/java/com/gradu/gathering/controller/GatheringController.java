@@ -1,5 +1,7 @@
 package com.gradu.gathering.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.gradu.gathering.dto.GatheringDTO;
 import com.gradu.gathering.entity.GatheringEntity;
 import com.gradu.gathering.entity.UserGathEntity;
 import com.gradu.gathering.service.GatheringService;
@@ -10,10 +12,13 @@ import entity.StatusCode;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import util.ConvertUtil;
 import util.IdWorker;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,8 +40,12 @@ public class GatheringController {
 
     @GetMapping("/page")
     public Result page(@RequestParam Map<String, Object> params){
-        PageData<GatheringEntity> page = gatheringService.page(params);
-        return new Result(true, StatusCode.OK,"查询成功",page);
+        Claims claims = (Claims) request.getAttribute("claims");
+        if (claims != null) {
+            params.put("userId", claims.getId());
+        }
+        List<GatheringDTO> dtoList = gatheringService.dtoList(params);
+        return new Result(true, StatusCode.OK,"查询成功", dtoList);
     }
 
     @GetMapping("/{id}")
