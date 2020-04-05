@@ -52,7 +52,7 @@ public class ProblemController {
         return baseClient.getLabelById(id);
     }
 
-    @GetMapping("/page")
+    @GetMapping("page")
     public Result page(@RequestParam Map<String, Object> params){
         PageData<ProblemEntity> page = problemService.page(params);
 
@@ -80,6 +80,18 @@ public class ProblemController {
 
 
         return new Result(true, StatusCode.OK,"查询成功",page);
+    }
+
+    @GetMapping("list")
+    public Result list(@RequestParam Map<String, Object> params) {
+        Claims claims = (Claims) request.getAttribute("claims");
+
+        if (claims != null) {
+            params.put("userid", claims.getId());
+        }
+
+        List<ProblemEntity> list = problemService.list(params);
+        return new Result(true, StatusCode.OK, "查询成功", list);
     }
 
     @GetMapping("/{id}")

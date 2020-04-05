@@ -16,10 +16,7 @@ import util.ConvertUtil;
 import util.IdWorker;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -50,8 +47,21 @@ public class GatheringController {
 
     @GetMapping("/{id}")
     public Result get(@PathVariable("id") String id){
+        Claims claims = (Claims) request.getAttribute("claims");
         GatheringEntity gatheringEntity = gatheringService.selectById(id);
-        return new Result(true, StatusCode.OK,"查询成功",gatheringEntity);
+        GatheringDTO gatheringDTO = ConvertUtil.sourceToTarget(gatheringEntity, GatheringDTO.class);
+        if (claims != null) {
+            Map<String, Object> params = new HashMap<>(4);
+            params.put("userid", claims.getId());
+            params.put("gathid", gatheringDTO.getId());
+            List<UserGathEntity> userGathEntityList = userGathService.list(params);
+            if (CollectionUtil.isNotEmpty(userGathEntityList)) {
+                gatheringDTO.setJoin(true);
+            } else {
+                gatheringDTO.setJoin(false);
+            }
+        }
+        return new Result(true, StatusCode.OK,"查询成功", gatheringDTO);
     }
 
     @PostMapping

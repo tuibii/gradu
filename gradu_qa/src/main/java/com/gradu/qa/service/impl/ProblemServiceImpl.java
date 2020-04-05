@@ -74,7 +74,11 @@ public class ProblemServiceImpl extends BaseServiceImpl<ProblemDao, ProblemEntit
 
     @Override
     public QueryWrapper<ProblemEntity> getWrapper(Map<String, Object> params) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<ProblemEntity> wrapper = new QueryWrapper<>();
+
+        String userid = (String) params.get("userid");
+
+        wrapper.eq(StringUtils.isNotEmpty(userid), "userid", userid);
 
         return wrapper;
     }
