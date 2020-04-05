@@ -91,7 +91,6 @@ public class UserController {
         return new Result(true,StatusCode.OK,"登陆成功",new LoginSuccessDTO(token,entity.getNickname(),entity.getAvatar()));
     }
 
-
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable("id") String id){
 
@@ -114,6 +113,18 @@ public class UserController {
     @PostMapping("/follow/{id}/{num}")
     public void incFollow(@PathVariable("id") String id,@PathVariable("num") int num){
         userService.incFollow(id,num);
+    }
+
+    @GetMapping("info")
+    public Result info(){
+        Claims claims = (Claims) request.getAttribute("claims");
+
+        if (claims == null) {
+            return new Result(false, StatusCode.FAIL, "未登录");
+        }
+
+        UserEntity entity = userService.getById(claims.getId());
+        return new Result(true, StatusCode.OK, "查询成功", entity);
     }
 
 }

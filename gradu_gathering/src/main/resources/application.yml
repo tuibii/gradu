@@ -26,14 +26,6 @@ eureka:
   instance:
     prefer-ip-address: true
 
-oss:
-  config:
-    accessKeyId: LTAI4Fuekbmrm9ykMREjd1MT
-    accessKeySecret: clXWACNPstus8DYTeQmUuE77XY8xXk
-    bucketName: gradu-boyan
-    endPoint: oss-cn-shenzhen.aliyuncs.com
-    domain: https://gradu-boyan.oss-cn-shenzhen.aliyuncs.com
-
 token:
   config:
     private_key: "JXU1MzVBJXU3ODFB"

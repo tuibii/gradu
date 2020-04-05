@@ -1,4 +1,4 @@
-package com.gradu.gathering.config;
+package com.gradu.user.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

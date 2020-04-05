@@ -1,11 +1,10 @@
-package com.gradu.gathering.service.impl;
+package com.gradu.user.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.aliyun.oss.OSSClient;
-import com.gradu.gathering.config.OssConfig;
-import com.gradu.gathering.service.OssService;
+import com.gradu.user.config.OssConfig;
+import com.gradu.user.service.OssService;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
