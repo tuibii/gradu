@@ -1,5 +1,6 @@
 package com.gradu.qa.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.qa.dto.ReplyDTO;
 import com.gradu.qa.entity.ProblemEntity;
@@ -16,6 +17,7 @@ import util.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -105,5 +107,19 @@ public class ReplyController {
         }
 
         return new Result(false,StatusCode.LOGIN_ERROR,"登录失效，请重新登录");
+    }
+
+    @GetMapping("list")
+    public Result list () {
+        Claims claims = (Claims) request.getAttribute("claims");
+
+        if (claims != null) {
+            QueryWrapper<ReplyEntity> wrapper = new QueryWrapper<>();
+            wrapper.eq("userid", claims.getId());
+            List<ReplyEntity> list = replyService.list(wrapper);
+            return new Result(true, StatusCode.OK, "查询成功", list);
+        }
+
+        return new Result(false, StatusCode.FAIL, "未登录");
     }
 }
