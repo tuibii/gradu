@@ -2,7 +2,9 @@ package com.gradu.qa.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.gradu.qa.client.BaseClient;
+import com.gradu.qa.client.UserClient;
 import com.gradu.qa.dto.ProblemDTO;
+import com.gradu.qa.entity.DynamicEntity;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.service.ProblemService;
 import com.gradu.qa.service.ProblemUserService;
@@ -18,6 +20,7 @@ import util.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +40,9 @@ public class ProblemController {
 
     @Autowired
     BaseClient baseClient;
+
+    @Autowired
+    UserClient userClient;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -119,6 +125,15 @@ public class ProblemController {
             String id = claims.getId();
             problemEntity.setUserid(id);
             problemService.add(problemEntity);
+
+            DynamicEntity dynamicEntity = new DynamicEntity();
+            dynamicEntity.setUserid(claims.getId());
+            dynamicEntity.setCreateDate(new Date());
+            dynamicEntity.setExternalUrl("/qa/" + problemEntity.getId());
+            dynamicEntity.setAction("提出了一个问题");
+            dynamicEntity.setContent(problemEntity.getTitle());
+            userClient.save(dynamicEntity);
+
             return new Result(true, StatusCode.OK, "添加成功");
         }
 
@@ -136,6 +151,15 @@ public class ProblemController {
                     ProblemEntity entity = problemService.selectById(id);
                     entity.setThumbup(entity.getThumbup()+1);
                     problemService.update(entity);
+
+                    DynamicEntity dynamicEntity = new DynamicEntity();
+                    dynamicEntity.setUserid(claims.getId());
+                    dynamicEntity.setCreateDate(new Date());
+                    dynamicEntity.setAction("点赞了问题");
+                    dynamicEntity.setContent(entity.getTitle());
+                    dynamicEntity.setExternalUrl("/qa/" + entity.getId());
+                    userClient.save(dynamicEntity);
+
                     return new Result(true,StatusCode.OK,"点赞成功");
                 }
             }
@@ -151,7 +175,20 @@ public class ProblemController {
         if (claims != null){
             String user = claims.getId();
             if (StringUtils.isNotEmpty(user)){
+                ProblemEntity entity = problemService.selectById(id);
+                if (entity == null) {
+                    return new Result(false,StatusCode.FAIL,"该问题不存在");
+                }
                 problemService.focus(id,user);
+
+                DynamicEntity dynamicEntity = new DynamicEntity();
+                dynamicEntity.setUserid(claims.getId());
+                dynamicEntity.setCreateDate(new Date());
+                dynamicEntity.setAction("关注了问题");
+                dynamicEntity.setContent(entity.getTitle());
+                dynamicEntity.setExternalUrl("/qa/" + id);
+                userClient.save(dynamicEntity);
+
                 return new Result(true,StatusCode.OK,"关注成功");
             }
         }

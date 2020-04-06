@@ -2,6 +2,7 @@ package com.gradu.gathering.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.gradu.gathering.dto.GatheringDTO;
+import com.gradu.gathering.entity.DynamicEntity;
 import com.gradu.gathering.entity.GatheringEntity;
 import com.gradu.gathering.entity.UserGathEntity;
 import com.gradu.gathering.service.GatheringService;
@@ -81,12 +82,24 @@ public class GatheringController {
         if (claims == null) {
             return new Result(false, StatusCode.ACCESS_ERROR, "未登录");
         }
+        GatheringEntity gatheringEntity = gatheringService.selectById(gatheringId);
+        if(gatheringEntity == null) {
+            return new Result(false, StatusCode.FAIL, "活动已失效");
+        }
         UserGathEntity userGathEntity = new UserGathEntity();
         userGathEntity.setGathid(gatheringId);
         userGathEntity.setUserid(claims.getId());
         userGathEntity.setExetime(new Date());
         userGathEntity.setId(String.valueOf(idWorker.nextId()));
         userGathService.insert(userGathEntity);
+
+        DynamicEntity dynamicEntity = new DynamicEntity();
+        dynamicEntity.setUserid(claims.getId());
+        dynamicEntity.setCreateDate(new Date());
+        dynamicEntity.setAction("报名参加了活动");
+        dynamicEntity.setContent(gatheringEntity.getName());
+        dynamicEntity.setExternalUrl("/gathering/" + gatheringId);
+
         return new Result(true, StatusCode.OK, "报名成功");
     }
 }

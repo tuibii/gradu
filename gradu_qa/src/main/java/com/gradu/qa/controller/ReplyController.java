@@ -2,7 +2,9 @@ package com.gradu.qa.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.gradu.qa.client.UserClient;
 import com.gradu.qa.dto.ReplyDTO;
+import com.gradu.qa.entity.DynamicEntity;
 import com.gradu.qa.entity.ProblemEntity;
 import com.gradu.qa.entity.ReplyEntity;
 import com.gradu.qa.service.ProblemService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import util.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +41,9 @@ public class ReplyController {
 
     @Autowired
     HttpServletRequest request;
+
+    @Autowired
+    UserClient userClient;
 
     @GetMapping("/problem/{id}")
     public Result getByProblemId(@PathVariable("id") String id){
@@ -83,6 +89,14 @@ public class ReplyController {
             entity.setNickname(subject);
             replyService.add(entity);
             problemService.update(problemEntity);
+
+            DynamicEntity dynamicEntity = new DynamicEntity();
+            dynamicEntity.setCreateDate(new Date());
+            dynamicEntity.setUserid(claims.getId());
+            dynamicEntity.setAction("回答了问题:" + problemEntity.getTitle());
+            dynamicEntity.setContent(entity.getContent());
+            dynamicEntity.setExternalUrl("/qa/" + problemEntity.getId());
+            userClient.save(dynamicEntity);
 
             return new Result(true,StatusCode.OK,"回答成功");
         }
