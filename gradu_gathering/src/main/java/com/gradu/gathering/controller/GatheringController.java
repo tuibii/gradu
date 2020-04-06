@@ -1,6 +1,7 @@
 package com.gradu.gathering.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.gradu.gathering.client.UserClient;
 import com.gradu.gathering.dto.GatheringDTO;
 import com.gradu.gathering.entity.DynamicEntity;
 import com.gradu.gathering.entity.GatheringEntity;
@@ -35,6 +36,9 @@ public class GatheringController {
 
     @Autowired
     IdWorker idWorker;
+
+    @Autowired
+    UserClient userClient;
 
     @GetMapping("/page")
     public Result page(@RequestParam Map<String, Object> params){
@@ -73,6 +77,15 @@ public class GatheringController {
         }
         entity.setCreator(claims.getId());
         gatheringService.add(entity);
+
+        DynamicEntity dynamicEntity = new DynamicEntity();
+        dynamicEntity.setUserid(claims.getId());
+        dynamicEntity.setCreateDate(new Date());
+        dynamicEntity.setAction("发布了一个活动");
+        dynamicEntity.setContent(entity.getName());
+        dynamicEntity.setExternalUrl("/gathering/" + entity.getId());
+        userClient.save(dynamicEntity);
+
         return new Result(true, StatusCode.OK, "发布成功");
     }
 
@@ -99,6 +112,7 @@ public class GatheringController {
         dynamicEntity.setAction("报名参加了活动");
         dynamicEntity.setContent(gatheringEntity.getName());
         dynamicEntity.setExternalUrl("/gathering/" + gatheringId);
+        userClient.save(dynamicEntity);
 
         return new Result(true, StatusCode.OK, "报名成功");
     }
