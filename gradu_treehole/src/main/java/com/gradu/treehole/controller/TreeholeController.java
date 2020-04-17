@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/treehole")
 @CrossOrigin
@@ -22,6 +24,12 @@ public class TreeholeController {
     @GetMapping
     public Result list(){
         return new Result(true, StatusCode.OK,"查询成功",treeholeService.list());
+    }
+
+    @GetMapping("/mytreehole/{user}")
+    public Result myTreehole(@PathVariable("user") String user) {
+        List<TreeholeEntity> list = treeholeService.getMyTreehole(user);
+        return new Result(true, StatusCode.OK, "查询成功", list);
     }
 
     @GetMapping("/commentlist/{id}")

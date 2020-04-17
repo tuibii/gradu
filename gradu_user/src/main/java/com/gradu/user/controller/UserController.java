@@ -69,7 +69,7 @@ public class UserController {
 
         String redisNumber = (String) redisTemplate.opsForValue().get("randomNumeric:"+userEntity.getMobile());
 
-        if (redisNumber.isEmpty() || !redisNumber.equals(code)){
+        if (StringUtils.isEmpty(redisNumber) || !redisNumber.equals(code)){
             return new Result(false,StatusCode.FAIL,"验证码错误");
         }
 

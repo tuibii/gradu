@@ -91,5 +91,9 @@ public class TreeholeServiceImpl implements TreeholeService {
         redisTemplate.opsForSet().remove("treehole:thumbup:"+treeholeid,userid);
     }
 
+    @Override
+    public List<TreeholeEntity> getMyTreehole(String user) {
+        return treeholeDao.findTreeholeEntitiesByNickname(user);
+    }
 
 }

@@ -9,5 +9,9 @@ public interface TreeholeDao extends MongoRepository<TreeholeEntity,String> {
 
     List<TreeholeEntity> findTreeholeEntitiesByParentid(String parentid);
 
+    List<TreeholeEntity> findTreeholeEntitiesByNickname(String nickname);
+
     List<TreeholeEntity> findByParentidIsNullAndStateEquals(String state);
+
+
 }

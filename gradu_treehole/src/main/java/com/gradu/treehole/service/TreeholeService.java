@@ -21,4 +21,6 @@ public interface TreeholeService {
     void thumbup(String userid,String treeholeid);
 
     void unthumbup(String userid,String treeholeid);
+
+    List<TreeholeEntity> getMyTreehole(String user);
 }
