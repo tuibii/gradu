@@ -50,6 +50,19 @@ public class GatheringController {
         return new Result(true, StatusCode.OK,"查询成功", dtoList);
     }
 
+    @GetMapping("/mygathering")
+    public Result myGathering(){
+        Claims claims = (Claims) request.getAttribute("claims");
+        if (claims != null) {
+            String userId = claims.getId();
+            Map<String, Object> params = new HashMap<>(4);
+            params.put("creator", userId);
+            List<GatheringEntity> list = gatheringService.list(params);
+            return new Result(true, StatusCode.OK, "查询成功", list);
+        }
+        return new Result(false, StatusCode.FAIL, "未登录");
+    }
+
     @GetMapping("/{id}")
     public Result get(@PathVariable("id") String id){
         Claims claims = (Claims) request.getAttribute("claims");

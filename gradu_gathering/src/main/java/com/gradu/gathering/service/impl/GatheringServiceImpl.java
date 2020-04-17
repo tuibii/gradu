@@ -87,7 +87,13 @@ public class GatheringServiceImpl extends BaseServiceImpl<GatheringDao, Gatherin
     @Override
     public QueryWrapper<GatheringEntity> getWrapper(Map<String, Object> params) {
         QueryWrapper<GatheringEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq(params.get("state")!=null,"state",params.get("state"));
+
+        String state = (String) params.get("state");
+        String creator = (String) params.get("creator");
+
+        wrapper.eq(StringUtils.isNotEmpty(creator), "creator", creator);
+        wrapper.eq(StringUtils.isNotEmpty(state),"state", state);
+
         return wrapper;
     }
 }
