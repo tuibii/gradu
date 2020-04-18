@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import util.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -125,6 +127,16 @@ public class UserController {
 
         UserEntity entity = userService.getById(claims.getId());
         return new Result(true, StatusCode.OK, "查询成功", entity);
+    }
+
+    @PostMapping("userList")
+    public List<UserEntity> userList(@RequestBody List<String> userIds) {
+        List<UserEntity> list = new ArrayList<>();
+        for (String userId : userIds) {
+            UserEntity byId = userService.getById(userId);
+            list.add(byId);
+        }
+        return list;
     }
 
 }

@@ -5,9 +5,12 @@ import com.gradu.gathering.client.UserClient;
 import com.gradu.gathering.dto.GatheringDTO;
 import com.gradu.gathering.entity.DynamicEntity;
 import com.gradu.gathering.entity.GatheringEntity;
+import com.gradu.gathering.entity.UserEntity;
 import com.gradu.gathering.entity.UserGathEntity;
+import com.gradu.gathering.excel.UserExcel;
 import com.gradu.gathering.service.GatheringService;
 import com.gradu.gathering.service.UserGathService;
+import com.gradu.gathering.util.ExcelUtils;
 import entity.PageData;
 import entity.Result;
 import entity.StatusCode;
@@ -18,7 +21,9 @@ import util.ConvertUtil;
 import util.IdWorker;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -59,6 +64,29 @@ public class GatheringController {
             params.put("creator", userId);
             List<GatheringEntity> list = gatheringService.list(params);
             return new Result(true, StatusCode.OK, "查询成功", list);
+        }
+        return new Result(false, StatusCode.FAIL, "未登录");
+    }
+
+    @GetMapping("/myjoin")
+    public Result myjoin(){
+        Claims claims = (Claims) request.getAttribute("claims");
+        if (claims != null) {
+            String userId = claims.getId();
+            Map<String, Object> params = new HashMap<>(4);
+            params.put("userid", userId);
+            List<UserGathEntity> list = userGathService.list(params);
+
+            List<GatheringEntity> dtoList = new ArrayList<>();
+
+            if (CollectionUtil.isNotEmpty(list)) {
+                for (UserGathEntity userGathEntity : list) {
+                    GatheringEntity gatheringEntity = gatheringService.selectById(userGathEntity.getGathid());
+                    dtoList.add(gatheringEntity);
+                }
+            }
+
+            return new Result(true, StatusCode.OK, "查询成功", dtoList);
         }
         return new Result(false, StatusCode.FAIL, "未登录");
     }
@@ -128,6 +156,25 @@ public class GatheringController {
         userClient.save(dynamicEntity);
 
         return new Result(true, StatusCode.OK, "报名成功");
+    }
+
+    @GetMapping("joinList/{id}")
+    public Result joinList(@PathVariable("id") String id) {
+        Map<String, Object> params = new HashMap<>(4);
+        params.put("gathid", id);
+        List<UserGathEntity> list = userGathService.list(params);
+        List<UserEntity> userList = userClient.userList(list.stream().map(UserGathEntity::getUserid).collect(Collectors.toList()));
+        return new Result(true, StatusCode.OK, "查询成功", userList);
+    }
+
+    @GetMapping("export/{id}")
+    public void export(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+        Map<String, Object> params = new HashMap<>(4);
+        params.put("gathid", id);
+        List<UserGathEntity> list = userGathService.list(params);
+        List<UserEntity> userList = userClient.userList(list.stream().map(UserGathEntity::getUserid).collect(Collectors.toList()));
+
+        ExcelUtils.exportExcelToTarget(response, "活动报名名单", userList, UserExcel.class);
     }
 }
 
