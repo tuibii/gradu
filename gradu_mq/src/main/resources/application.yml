@@ -14,8 +14,8 @@ spring:
 #签名
 sms:
   aliyun:
-    access_key_id: LTAI4FtAABnGAkz4xwpoxwMt
-    access_key_secret: rLR0h20fdg48mcVta9iRvudKx15DIe
+    access_key_id: LTAI4FteHG4Difnj6yK4ADPX
+    access_key_secret: Qx2EUW1SZ6UQMQh0z7eWAR5py0ryCy
     template_code: SMS_174990010
     sign_name: 博砚
 

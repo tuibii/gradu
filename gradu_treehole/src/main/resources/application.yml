@@ -8,6 +8,9 @@ spring:
     mongodb:
       host: 47.97.162.247
       database: treehole
+      port: 27017
+      password: '000000'
+      username: root
   redis:
     host: 47.97.162.247
     port: 6379

@@ -34,3 +34,11 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka/
   instance:
     prefer-ip-address: true
+
+oss:
+  config:
+    accessKeyId: LTAI4FteHG4Difnj6yK4ADPX
+    accessKeySecret: Qx2EUW1SZ6UQMQh0z7eWAR5py0ryCy
+    bucketName: gradu-boyan
+    endPoint: oss-cn-shenzhen.aliyuncs.com
+    domain: https://gradu-boyan.oss-cn-shenzhen.aliyuncs.com
